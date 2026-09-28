@@ -23,21 +23,46 @@ func (s *PaymentService) GetDashboardStats(ctx context.Context, days int) (*Dash
 	now := time.Now()
 	since := now.AddDate(0, 0, -days)
 	todayStart := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	trendStart := dashboardTrendStart(now, days)
+	trendSince := trendStart.AddDate(0, 0, -29)
 
 	paidStatuses := []string{OrderStatusCompleted, OrderStatusPaid, OrderStatusRecharging}
+
+	earliestOrders, err := s.entClient.PaymentOrder.Query().
+		Where(
+			paymentorder.StatusIn(paidStatuses...),
+			paymentorder.PaidAtNotNil(),
+		).
+		Order(paymentorder.ByPaidAt()).
+		Limit(1).
+		All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	var earliestPaidAt *time.Time
+	if len(earliestOrders) > 0 && earliestOrders[0].PaidAt != nil {
+		earliestPaidAt = earliestOrders[0].PaidAt
+	}
 
 	orders, err := s.entClient.PaymentOrder.Query().
 		Where(
 			paymentorder.StatusIn(paidStatuses...),
-			paymentorder.PaidAtGTE(since),
+			paymentorder.PaidAtGTE(trendSince),
 		).
 		All(ctx)
 	if err != nil {
 		return nil, err
 	}
 
+	windowOrders := make([]*dbent.PaymentOrder, 0, len(orders))
+	for _, order := range orders {
+		if order.PaidAt != nil && !order.PaidAt.Before(since) {
+			windowOrders = append(windowOrders, order)
+		}
+	}
+
 	st := &DashboardStats{}
-	computeBasicStats(st, orders, todayStart)
+	computeBasicStats(st, windowOrders, todayStart)
 
 	st.PendingOrders, err = s.entClient.PaymentOrder.Query().
 		Where(paymentorder.StatusEQ(OrderStatusPending)).
@@ -46,9 +71,10 @@ func (s *PaymentService) GetDashboardStats(ctx context.Context, days int) (*Dash
 		return nil, err
 	}
 
-	st.DailySeries = buildDailySeries(orders, since, days)
-	st.PaymentMethods = buildMethodDistribution(orders)
-	st.TopUsers = buildTopUsers(orders)
+	st.DailySeries = buildDailySeries(windowOrders, since, days)
+	st.RevenueTrend = buildRevenueTrend(orders, trendStart, days, earliestPaidAt)
+	st.PaymentMethods = buildMethodDistribution(windowOrders)
+	st.TopUsers = buildTopUsers(windowOrders)
 
 	return st, nil
 }
@@ -103,6 +129,67 @@ func buildDailySeries(orders []*dbent.PaymentOrder, since time.Time, days int) [
 		}
 	}
 	return series
+}
+
+func dashboardTrendStart(now time.Time, days int) time.Time {
+	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	return today.AddDate(0, 0, -days)
+}
+
+func buildRevenueTrend(orders []*dbent.PaymentOrder, start time.Time, days int, earliestPaidAt *time.Time) []RevenueTrendPoint {
+	dailyAmounts := make(map[string]CurrencyAmounts)
+	currencies := make(map[string]struct{})
+	for _, order := range orders {
+		if order.PaidAt == nil {
+			continue
+		}
+
+		paidAt := order.PaidAt.In(start.Location())
+		paidDate := time.Date(paidAt.Year(), paidAt.Month(), paidAt.Day(), 0, 0, 0, 0, start.Location())
+		dateKey := paidDate.Format("2006-01-02")
+		currency := PaymentOrderCurrency(order)
+		currencies[currency] = struct{}{}
+		if _, ok := dailyAmounts[dateKey]; !ok {
+			dailyAmounts[dateKey] = make(CurrencyAmounts)
+		}
+		dailyAmounts[dateKey][currency] += order.PayAmount
+	}
+
+	series := make([]RevenueTrendPoint, 0, days)
+	for i := 0; i < days; i++ {
+		date := start.AddDate(0, 0, i)
+		point := RevenueTrendPoint{
+			Date:             date.Format("2006-01-02"),
+			Rolling7dAmount:  make(NullableCurrencyAmounts),
+			Rolling30dAmount: make(NullableCurrencyAmounts),
+		}
+		for currency := range currencies {
+			point.Rolling7dAmount[currency] = rollingRevenueAmount(dailyAmounts, date, earliestPaidAt, currency, 7)
+			point.Rolling30dAmount[currency] = rollingRevenueAmount(dailyAmounts, date, earliestPaidAt, currency, 30)
+		}
+		series = append(series, point)
+	}
+	return series
+}
+
+func rollingRevenueAmount(dailyAmounts map[string]CurrencyAmounts, date time.Time, earliestPaidAt *time.Time, currency string, windowDays int) *float64 {
+	if earliestPaidAt == nil {
+		return nil
+	}
+	windowStart := date.AddDate(0, 0, 1-windowDays)
+	earliestLocal := earliestPaidAt.In(date.Location())
+	earliestDate := time.Date(earliestLocal.Year(), earliestLocal.Month(), earliestLocal.Day(), 0, 0, 0, 0, date.Location())
+	if windowStart.Before(earliestDate) {
+		return nil
+	}
+
+	var amount float64
+	for dayOffset := 0; dayOffset < windowDays; dayOffset++ {
+		day := date.AddDate(0, 0, -dayOffset).Format("2006-01-02")
+		amount += dailyAmounts[day][currency]
+	}
+	amount = roundAmount(amount)
+	return &amount
 }
 
 func buildMethodDistribution(orders []*dbent.PaymentOrder) []PaymentMethodStat {

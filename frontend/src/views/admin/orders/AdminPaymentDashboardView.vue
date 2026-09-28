@@ -30,7 +30,11 @@
       </div>
       <template v-else-if="stats">
         <OrderStatsCards :stats="stats" />
-        <DailyRevenueChart :data="stats.daily_series || []" :loading="loading" />
+        <DailyRevenueChart
+          :data="stats.daily_series || []"
+          :revenue-trend="stats.revenue_trend"
+          :loading="loading"
+        />
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div class="card p-4">
             <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">{{ t('payment.admin.paymentDistribution') }}</h3>
@@ -87,7 +91,7 @@ const { t } = useI18n()
 const appStore = useAppStore()
 
 const DAYS_OPTIONS = [7, 30, 90] as const
-const days = ref<number>(30)
+const days = ref<number>(90)
 const loading = ref(false)
 const stats = ref<DashboardStats | null>(null)
 

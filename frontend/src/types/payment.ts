@@ -230,6 +230,14 @@ export interface DailyPaymentStats {
   count: number
 }
 
+export type NullableCurrencyAmounts = Record<string, number | null>
+
+export interface RevenueTrendPoint {
+  date: string
+  rolling_7d_amount: NullableCurrencyAmounts
+  rolling_30d_amount: NullableCurrencyAmounts
+}
+
 export interface PaymentMethodStats {
   type: string
   amount: CurrencyAmounts
@@ -249,6 +257,7 @@ export interface DashboardStats {
   total_count: number
   avg_amount: CurrencyAmounts
   daily_series: DailyPaymentStats[]
+  revenue_trend?: RevenueTrendPoint[]
   payment_methods: PaymentMethodStats[]
   top_users: Record<string, TopUserPaymentStats[]>
 }

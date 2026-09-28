@@ -152,6 +152,7 @@ type DashboardStats struct {
 	PendingOrders int             `json:"pending_orders"`
 
 	DailySeries    []DailyStats        `json:"daily_series"`
+	RevenueTrend   []RevenueTrendPoint `json:"revenue_trend"`
 	PaymentMethods []PaymentMethodStat `json:"payment_methods"`
 	TopUsers       TopUsersByCurrency  `json:"top_users"`
 }
@@ -165,6 +166,14 @@ type DailyStats struct {
 	Amount CurrencyAmounts `json:"amount"`
 	Count  int             `json:"count"`
 }
+
+type RevenueTrendPoint struct {
+	Date             string                  `json:"date"`
+	Rolling7dAmount  NullableCurrencyAmounts `json:"rolling_7d_amount"`
+	Rolling30dAmount NullableCurrencyAmounts `json:"rolling_30d_amount"`
+}
+
+type NullableCurrencyAmounts map[string]*float64
 
 type PaymentMethodStat struct {
 	Type   string          `json:"type"`
