@@ -147,4 +147,14 @@ onBeforeUnmount(() => {
   height: calc(100dvh - 4rem);
   min-width: 0;
 }
+
+@container llmr-image-playground (max-width: 700px) {
+  .image-playground-page :deep(.control-section:not(.prompt-section) .disclosure-inner) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .image-playground-page :deep(.control-section:not(.prompt-section) .field) {
+    min-width: 0;
+  }
+}
 </style>
