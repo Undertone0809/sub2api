@@ -6337,10 +6337,10 @@
                   {{ t('admin.settings.user_error_view.description') }}
                 </p>
               </div>
-              <label class="toggle">
-                <input v-model="form.allow_user_view_error_requests" type="checkbox" />
-                <span class="toggle-slider"></span>
-              </label>
+              <Toggle
+                v-model="form.allow_user_view_error_requests"
+                :aria-label="t('admin.settings.user_error_view.label')"
+              />
             </div>
           </div>
         </div>
@@ -8183,11 +8183,14 @@
                     }}</label>
                     <div class="flex items-center gap-2">
                       <button
+                        role="switch"
+                        :aria-checked="!!form.payment_cancel_rate_limit_enabled"
+                        :aria-label="t('admin.settings.payment.cancelRateLimit')"
                         type="button"
                         :class="[
                           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                           form.payment_cancel_rate_limit_enabled
-                            ? 'bg-primary-500'
+                            ? 'bg-emerald-600 dark:bg-emerald-500'
                             : 'bg-gray-300 dark:bg-dark-600',
                         ]"
                         @click="
@@ -8273,11 +8276,14 @@
                     }}</label>
                     <div class="flex items-center gap-2">
                       <button
+                        role="switch"
+                        :aria-checked="!!form.payment_alipay_force_qrcode"
+                        :aria-label="t('admin.settings.payment.alipayForceQRCode')"
                         type="button"
                         :class="[
                           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                           form.payment_alipay_force_qrcode
-                            ? 'bg-primary-500'
+                            ? 'bg-emerald-600 dark:bg-emerald-500'
                             : 'bg-gray-300 dark:bg-dark-600',
                         ]"
                         @click="
@@ -8305,11 +8311,14 @@
                     }}</label>
                     <div class="flex items-center gap-2">
                       <button
+                        role="switch"
+                        :aria-checked="!!form.payment_alipay_mobile_precreate_deep_link"
+                        :aria-label="t('admin.settings.payment.alipayMobilePrecreateDeepLink')"
                         type="button"
                         :class="[
                           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                           form.payment_alipay_mobile_precreate_deep_link
-                            ? 'bg-primary-500'
+                            ? 'bg-emerald-600 dark:bg-emerald-500'
                             : 'bg-gray-300 dark:bg-dark-600',
                         ]"
                         @click="
@@ -8818,12 +8827,15 @@
                     >
                       <input
                         type="checkbox"
+                        role="switch"
+                        :aria-checked="!entry.disabled"
+                        :aria-label="t('admin.settings.quotaNotify.enabled') + ' ' + entry.email"
                         :checked="!entry.disabled"
                         @change="entry.disabled = !entry.disabled"
                         class="sr-only peer"
                       />
                       <div
-                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:after:border-gray-500 peer-checked:bg-primary-600"
+                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:after:border-gray-500 peer-checked:bg-emerald-600 dark:peer-checked:bg-emerald-500"
                       ></div>
                     </label>
                     <input

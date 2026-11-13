@@ -64,11 +64,14 @@
           aria-labelledby="bulk-edit-openai-passthrough-label"
         >
           <button
+            role="switch"
+            :aria-checked="!!openaiPassthroughEnabled"
+            :aria-label="t('admin.accounts.openai.oauthPassthrough')"
             id="bulk-edit-openai-passthrough-toggle"
             type="button"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              openaiPassthroughEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              openaiPassthroughEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="openaiPassthroughEnabled = !openaiPassthroughEnabled"
           >
@@ -115,11 +118,14 @@
           aria-labelledby="bulk-edit-openai-flatten-namespaces-label"
         >
           <button
+            role="switch"
+            :aria-checked="!!openaiFlattenNamespacesEnabled"
+            :aria-label="t('admin.accounts.openai.flattenNamespaces')"
             id="bulk-edit-openai-flatten-namespaces-toggle"
             type="button"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              openaiFlattenNamespacesEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              openaiFlattenNamespacesEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="openaiFlattenNamespacesEnabled = !openaiFlattenNamespacesEnabled"
           >
@@ -166,6 +172,7 @@
           aria-labelledby="bulk-edit-openai-long-context-billing-label"
         >
           <button
+            :aria-label="t('admin.accounts.openai.longContextBilling')"
             type="button"
             data-testid="bulk-edit-openai-long-context-billing-toggle"
             role="switch"
@@ -173,7 +180,7 @@
             :aria-checked="openAILongContextBillingEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              openAILongContextBillingEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              openAILongContextBillingEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="openAILongContextBillingEnabled = !openAILongContextBillingEnabled"
           >
@@ -623,10 +630,13 @@
         </div>
         <div v-if="enableInterceptWarmup" id="bulk-edit-intercept-warmup-body" class="mt-3">
           <button
+            role="switch"
+            :aria-checked="!!interceptWarmupRequests"
+            :aria-label="t('admin.accounts.interceptWarmupRequests')"
             type="button"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              interceptWarmupRequests ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              interceptWarmupRequests ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="interceptWarmupRequests = !interceptWarmupRequests"
           >
@@ -665,10 +675,13 @@
         </div>
         <div v-if="enableHeaderOverride" id="bulk-edit-header-override-body" class="mt-3 space-y-3">
           <button
+            role="switch"
+            :aria-checked="!!headerOverrideEnabled"
+            :aria-label="t('admin.accounts.headerOverride.title')"
             type="button"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              headerOverrideEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              headerOverrideEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="headerOverrideEnabled = !headerOverrideEnabled"
           >
@@ -949,11 +962,14 @@
             {{ t('admin.accounts.openai.codexCLIOnlyDesc') }}
           </p>
           <button
+            role="switch"
+            :aria-checked="!!codexCLIOnlyEnabled"
+            :aria-label="t('admin.accounts.openai.codexCLIOnly')"
             id="bulk-edit-openai-codex-cli-only-toggle"
             type="button"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              codexCLIOnlyEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              codexCLIOnlyEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="codexCLIOnlyEnabled = !codexCLIOnlyEnabled"
           >
@@ -993,11 +1009,14 @@
             {{ t('admin.accounts.openai.codexCLIOnlyAppServerDesc') }}
           </p>
           <button
+            role="switch"
+            :aria-checked="!!codexCLIOnlyAppServerEnabled"
+            :aria-label="t('admin.accounts.openai.codexCLIOnlyAppServer')"
             id="bulk-edit-openai-codex-app-server-toggle"
             type="button"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              codexCLIOnlyAppServerEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              codexCLIOnlyAppServerEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
             @click="codexCLIOnlyAppServerEnabled = !codexCLIOnlyAppServerEnabled"
           >
@@ -1333,11 +1352,14 @@
           <div class="mb-3 flex items-center justify-between">
             <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('admin.accounts.quotaControl.rpmLimit.hint') }}</span>
             <button
+              role="switch"
+              :aria-checked="!!rpmLimitEnabled"
+              :aria-label="t('admin.accounts.quotaControl.rpmLimit.label')"
               type="button"
               @click="rpmLimitEnabled = !rpmLimitEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                rpmLimitEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                rpmLimitEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span

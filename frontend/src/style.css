@@ -18,6 +18,7 @@
     --llmr-muted: #626262;
     --llmr-line: #e4e4e4;
     --llmr-hover: #efefef;
+    --llmr-selected: #e4e4e4;
     --llmr-action: #262626;
     --llmr-action-text: #ffffff;
     --llmr-action-hover: #404040;
@@ -35,6 +36,7 @@
     --llmr-muted: #a3a3a3;
     --llmr-line: #323232;
     --llmr-hover: #262626;
+    --llmr-selected: #343434;
     --llmr-action: #e5e5e5;
     --llmr-action-text: #171717;
     --llmr-action-hover: #ffffff;
@@ -112,11 +114,15 @@
   }
 
   .btn-secondary {
-    @apply bg-white dark:bg-dark-800;
-    @apply text-gray-700 dark:text-gray-200;
-    @apply border border-gray-200 dark:border-dark-600;
-    @apply shadow-sm hover:bg-gray-50 dark:hover:bg-dark-700;
-    @apply hover:border-gray-300 dark:hover:border-dark-500;
+    @apply border shadow-sm;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
+    color: var(--llmr-secondary);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--llmr-hover);
+    border-color: var(--llmr-focus);
   }
 
   .btn-ghost {
@@ -364,8 +370,8 @@
   .table th {
     @apply px-4 py-3 text-left font-medium;
     @apply text-gray-600 dark:text-dark-300;
-    @apply bg-gray-50 dark:bg-dark-800/50;
     @apply border-b border-gray-200 dark:border-dark-700;
+    background-color: var(--llmr-hover);
   }
 
   .table td {
@@ -416,20 +422,24 @@
   /* ============ 下拉菜单 ============ */
   .dropdown {
     @apply absolute z-50;
-    @apply bg-white dark:bg-dark-800;
     @apply rounded-xl;
-    @apply border border-gray-200 dark:border-dark-700;
+    @apply border;
     @apply shadow-lg;
     @apply py-1;
     @apply origin-top-right animate-scale-in;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
   }
 
   .dropdown-item {
     @apply px-4 py-2 text-sm;
     @apply text-gray-700 dark:text-gray-300;
-    @apply hover:bg-gray-100 dark:hover:bg-dark-700;
     @apply cursor-pointer transition-colors;
     @apply flex items-center gap-2;
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--llmr-hover);
   }
 
   /* ============ 模态框 ============ */
@@ -442,10 +452,11 @@
   .modal-content {
     @apply w-full;
     @apply max-h-[95vh] sm:max-h-[90vh];
-    @apply bg-white dark:bg-dark-800;
     @apply rounded-2xl shadow-2xl;
-    @apply border border-gray-200 dark:border-dark-700;
+    @apply border;
     @apply flex flex-col;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
   }
 
   .modal-header {
@@ -535,8 +546,9 @@
   .dialog-container {
     @apply flex w-full flex-col;
     @apply max-h-[90vh];
-    @apply rounded-2xl bg-white dark:bg-dark-800;
+    @apply rounded-2xl;
     @apply shadow-xl;
+    background-color: var(--llmr-elevated);
   }
 
   .dialog-header {
@@ -550,8 +562,8 @@
 
   .dialog-footer {
     @apply border-t border-gray-100 px-6 py-4 dark:border-dark-700;
-    @apply bg-gray-50/60 dark:bg-dark-900/40;
     @apply flex items-center justify-end gap-3;
+    background-color: var(--llmr-bg);
   }
 
   /* ============ Toast 通知 ============ */
@@ -721,7 +733,7 @@
   }
 
   .switch-active {
-    @apply bg-primary-500;
+    @apply bg-emerald-600 dark:bg-emerald-500;
   }
 
   .switch-thumb {

@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { QUOTA_THRESHOLD_TYPE_FIXED, QUOTA_THRESHOLD_TYPE_PERCENTAGE, type QuotaThresholdType } from '@/constants/account'
+
+const { t } = useI18n()
 
 defineProps<{
   enabled: boolean | null
@@ -17,11 +20,14 @@ const emit = defineEmits<{
 <template>
   <div class="flex items-center gap-1.5">
     <button
+      role="switch"
+      :aria-checked="!!enabled"
+      :aria-label="t('admin.settings.quotaNotify.enabled')"
       type="button"
       @click="emit('update:enabled', !enabled)"
       :class="[
-        'relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-        enabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+        'relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-dark-800',
+        enabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
       ]"
     >
       <span

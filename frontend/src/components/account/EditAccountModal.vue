@@ -525,11 +525,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!poolModeEnabled"
+              :aria-label="t('admin.accounts.poolMode')"
               type="button"
               @click="poolModeEnabled = !poolModeEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                poolModeEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                poolModeEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -631,11 +634,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!customErrorCodesEnabled"
+              :aria-label="t('admin.accounts.customErrorCodes')"
               type="button"
               @click="customErrorCodesEnabled = !customErrorCodesEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                customErrorCodesEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                customErrorCodesEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -805,12 +811,15 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!grokOAuthCustomBaseUrlEnabled"
+            :aria-label="t('admin.accounts.grokCustomBaseUrl.title')"
             type="button"
             data-testid="grok-custom-base-url-toggle"
             @click="grokOAuthCustomBaseUrlEnabled = !grokOAuthCustomBaseUrlEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              grokOAuthCustomBaseUrlEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              grokOAuthCustomBaseUrlEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -843,11 +852,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!headerOverrideEnabled"
+            :aria-label="t('admin.accounts.headerOverride.title')"
             type="button"
             @click="headerOverrideEnabled = !headerOverrideEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              headerOverrideEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              headerOverrideEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -1495,11 +1507,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!poolModeEnabled"
+              :aria-label="t('admin.accounts.poolMode')"
               type="button"
               @click="poolModeEnabled = !poolModeEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                poolModeEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                poolModeEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -1676,11 +1691,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!tempUnschedEnabled"
+            :aria-label="t('admin.accounts.tempUnschedulable.title')"
             type="button"
             @click="tempUnschedEnabled = !tempUnschedEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              tempUnschedEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              tempUnschedEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -1901,11 +1919,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!interceptWarmupRequests"
+            :aria-label="t('admin.accounts.interceptWarmupRequests')"
             type="button"
             @click="interceptWarmupRequests = !interceptWarmupRequests"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              interceptWarmupRequests ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              interceptWarmupRequests ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2027,11 +2048,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!openaiPassthroughEnabled"
+            :aria-label="t('admin.accounts.openai.oauthPassthrough')"
             type="button"
             @click="openaiPassthroughEnabled = !openaiPassthroughEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              openaiPassthroughEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              openaiPassthroughEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2057,12 +2081,15 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!openaiFlattenNamespacesEnabled"
+            :aria-label="t('admin.accounts.openai.flattenNamespaces')"
             type="button"
             data-testid="edit-openai-flatten-namespaces-toggle"
             @click="openaiFlattenNamespacesEnabled = !openaiFlattenNamespacesEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              openaiFlattenNamespacesEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              openaiFlattenNamespacesEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2224,6 +2251,7 @@
           </p>
         </div>
         <button
+          :aria-label="t('admin.accounts.openai.imagesUrlToB64Json')"
           type="button"
           data-testid="openai-images-url-to-b64-json-toggle"
           role="switch"
@@ -2231,7 +2259,7 @@
           @click="openAIImagesUrlToB64JsonEnabled = !openAIImagesUrlToB64JsonEnabled"
           :class="[
             'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-            openAIImagesUrlToB64JsonEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+            openAIImagesUrlToB64JsonEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
           ]"
         >
           <span
@@ -2373,11 +2401,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!anthropicPassthroughEnabled"
+            :aria-label="t('admin.accounts.anthropic.apiKeyPassthrough')"
             type="button"
             @click="anthropicPassthroughEnabled = !anthropicPassthroughEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              anthropicPassthroughEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              anthropicPassthroughEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2544,6 +2575,7 @@
             </p>
           </div>
           <button
+            :aria-label="t('admin.accounts.openai.longContextBilling')"
             type="button"
             data-testid="openai-long-context-billing-toggle"
             role="switch"
@@ -2551,7 +2583,7 @@
             @click="openAILongContextBillingEnabled = !openAILongContextBillingEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              openAILongContextBillingEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              openAILongContextBillingEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2576,11 +2608,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!codexCLIOnlyEnabled"
+            :aria-label="t('admin.accounts.openai.codexCLIOnly')"
             type="button"
             @click="codexCLIOnlyEnabled = !codexCLIOnlyEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              codexCLIOnlyEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              codexCLIOnlyEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2602,11 +2637,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!codexCLIOnlyAppServerEnabled"
+            :aria-label="t('admin.accounts.openai.codexCLIOnlyAppServer')"
             type="button"
             @click="codexCLIOnlyAppServerEnabled = !codexCLIOnlyAppServerEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              codexCLIOnlyAppServerEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              codexCLIOnlyAppServerEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2724,11 +2762,14 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!autoPauseOnExpired"
+            :aria-label="t('admin.accounts.autoPauseOnExpired')"
             type="button"
             @click="autoPauseOnExpired = !autoPauseOnExpired"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              autoPauseOnExpired ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              autoPauseOnExpired ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2749,11 +2790,14 @@
           <div class="flex items-center justify-between">
             <label class="input-label mb-0">{{ t('admin.accounts.autoPause5hDisabled') }}</label>
             <button
+              role="switch"
+              :aria-checked="!!autoPause5hDisabled"
+              :aria-label="t('admin.accounts.autoPause5hDisabled')"
               type="button"
               @click="autoPause5hDisabled = !autoPause5hDisabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                autoPause5hDisabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                autoPause5hDisabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
               data-testid="auto-pause-5h-disabled"
             >
@@ -2785,11 +2829,14 @@
           <div class="flex items-center justify-between">
             <label class="input-label mb-0">{{ t('admin.accounts.autoPause7dDisabled') }}</label>
             <button
+              role="switch"
+              :aria-checked="!!autoPause7dDisabled"
+              :aria-label="t('admin.accounts.autoPause7dDisabled')"
               type="button"
               @click="autoPause7dDisabled = !autoPause7dDisabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                autoPause7dDisabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                autoPause7dDisabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
               data-testid="auto-pause-7d-disabled"
             >
@@ -2832,12 +2879,15 @@
             </p>
           </div>
           <button
+            role="switch"
+            :aria-checked="!!autoResetCreditEnabled"
+            :aria-label="t('admin.accounts.autoResetCredit.title')"
             type="button"
             data-testid="auto-reset-credit-enabled"
             @click="autoResetCreditEnabled = !autoResetCreditEnabled"
             :class="[
               'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-              autoResetCreditEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+              autoResetCreditEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
             ]"
           >
             <span
@@ -2901,11 +2951,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!windowCostEnabled"
+              :aria-label="t('admin.accounts.quotaControl.windowCost.label')"
               type="button"
               @click="windowCostEnabled = !windowCostEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                windowCostEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                windowCostEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -2961,11 +3014,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!sessionLimitEnabled"
+              :aria-label="t('admin.accounts.quotaControl.sessionLimit.label')"
               type="button"
               @click="sessionLimitEnabled = !sessionLimitEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                sessionLimitEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                sessionLimitEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -3018,11 +3074,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!rpmLimitEnabled"
+              :aria-label="t('admin.accounts.quotaControl.rpmLimit.label')"
               type="button"
               @click="rpmLimitEnabled = !rpmLimitEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                rpmLimitEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                rpmLimitEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -3131,11 +3190,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!tlsFingerprintEnabled"
+              :aria-label="t('admin.accounts.quotaControl.tlsFingerprint.label')"
               type="button"
               @click="tlsFingerprintEnabled = !tlsFingerprintEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                tlsFingerprintEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                tlsFingerprintEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -3166,11 +3228,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!sessionIdMaskingEnabled"
+              :aria-label="t('admin.accounts.quotaControl.sessionIdMasking.label')"
               type="button"
               @click="sessionIdMaskingEnabled = !sessionIdMaskingEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                sessionIdMaskingEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                sessionIdMaskingEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -3193,11 +3258,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!cacheTTLOverrideEnabled"
+              :aria-label="t('admin.accounts.quotaControl.cacheTTLOverride.label')"
               type="button"
               @click="cacheTTLOverrideEnabled = !cacheTTLOverrideEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                cacheTTLOverrideEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                cacheTTLOverrideEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
@@ -3233,11 +3301,14 @@
               </p>
             </div>
             <button
+              role="switch"
+              :aria-checked="!!customBaseUrlEnabled"
+              :aria-label="t('admin.accounts.quotaControl.customBaseUrl.label')"
               type="button"
               @click="customBaseUrlEnabled = !customBaseUrlEnabled"
               :class="[
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
-                customBaseUrlEnabled ? 'bg-primary-600' : 'bg-gray-200 dark:bg-dark-600'
+                customBaseUrlEnabled ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-200 dark:bg-dark-600'
               ]"
             >
               <span
