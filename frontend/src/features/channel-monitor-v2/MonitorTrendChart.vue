@@ -59,6 +59,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { useChartTheme } from '@/composables/useChartTheme'
 import { computed, ref, watch } from 'vue'
 import {
   Chart as ChartJS,
@@ -98,9 +99,7 @@ const chartRef = ref<HTMLElement | null>(null)
 const zoom = ref<ZoomState>(resetZoom())
 const zoomed = computed(() => isZoomed(zoom.value))
 
-const isDark = computed(() =>
-  typeof document !== 'undefined' && document.documentElement.classList.contains('dark')
-)
+const chartTheme = useChartTheme()
 
 const bucketLabel = computed(() => {
   const seconds = props.coverage?.bucket_seconds || 60
@@ -205,11 +204,11 @@ function smoothTrend(values: Array<number | null>): Array<number | null> {
 }
 
 const chartOptions = computed(() => {
-  const text = isDark.value ? '#9ca3af' : '#6b7280'
-  const grid = isDark.value ? '#374151' : '#f3f4f6'
-  const tooltipBg = isDark.value ? '#1f2937' : '#ffffff'
-  const tooltipTitle = isDark.value ? '#f3f4f6' : '#111827'
-  const tooltipBody = isDark.value ? '#d1d5db' : '#4b5563'
+  const text = chartTheme.value.text
+  const grid = chartTheme.value.grid
+  const tooltipBg = chartTheme.value.tooltipBackground
+  const tooltipTitle = chartTheme.value.tooltipTitle
+  const tooltipBody = chartTheme.value.tooltipText
   return {
     responsive: true,
     maintainAspectRatio: false,

@@ -16,7 +16,7 @@
   <div
     v-else-if="compactHomeEnabled"
     data-testid="compact-home"
-    class="flex min-h-screen flex-col bg-gray-50 text-gray-900 dark:bg-dark-950 dark:text-white"
+    class="flex min-h-screen flex-col bg-[var(--llmr-bg)]"
   >
     <header class="border-b border-gray-200 px-4 py-4 sm:px-6 dark:border-dark-800">
       <nav class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 sm:gap-4">
@@ -59,7 +59,7 @@
           </button>
           <router-link
             :to="isAuthenticated ? dashboardPath : '/login'"
-            class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+            class="btn btn-primary min-h-10 shrink-0 rounded-lg px-4 py-2"
           >
             {{ isAuthenticated ? t('home.dashboard') : t('home.login') }}
           </router-link>
@@ -74,11 +74,11 @@
           alt="Logo"
           class="mx-auto mb-6 h-20 w-20 rounded-2xl object-contain"
         />
-        <h1 class="[overflow-wrap:anywhere] text-3xl font-bold md:text-4xl">{{ siteName }}</h1>
+        <h1 class="[overflow-wrap:anywhere] text-3xl font-bold tracking-tight md:text-4xl">{{ siteName }}</h1>
         <p class="mt-4 whitespace-pre-wrap [overflow-wrap:anywhere] text-base text-gray-600 dark:text-dark-300">{{ siteSubtitle }}</p>
         <router-link
           :to="isAuthenticated ? dashboardPath : '/login'"
-          class="mt-8 inline-flex min-h-10 items-center justify-center rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-700"
+          class="btn btn-primary mt-8 min-h-10 rounded-lg px-5"
         >
           {{ isAuthenticated ? t('home.goToDashboard') : t('home.login') }}
         </router-link>
@@ -93,27 +93,8 @@
   <!-- Default Home Page -->
   <div
     v-else
-    class="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-gray-50 via-primary-50/30 to-gray-100 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950"
+    class="relative flex min-h-screen flex-col overflow-hidden bg-mesh-gradient"
   >
-    <!-- Background Decorations -->
-    <div class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div
-        class="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-primary-400/20 blur-3xl"
-      ></div>
-      <div
-        class="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-primary-500/15 blur-3xl"
-      ></div>
-      <div
-        class="absolute left-1/3 top-1/4 h-72 w-72 rounded-full bg-primary-300/10 blur-3xl"
-      ></div>
-      <div
-        class="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-primary-400/10 blur-3xl"
-      ></div>
-      <div
-        class="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"
-      ></div>
-    </div>
-
     <!-- Header -->
     <header class="relative z-20 px-6 py-4">
       <nav class="mx-auto flex max-w-6xl items-center justify-between">
@@ -169,7 +150,7 @@
             class="inline-flex items-center gap-1.5 rounded-full bg-gray-900 py-1 pl-1 pr-2.5 transition-colors hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             <span
-              class="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 text-[10px] font-semibold text-white"
+              class="flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 text-[10px] font-semibold text-gray-900"
             >
               {{ userInitial }}
             </span>
@@ -207,7 +188,7 @@
           <!-- Left: Text Content -->
           <div class="flex-1 text-center lg:text-left">
             <h1
-              class="mb-4 text-4xl font-bold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"
+              class="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl"
             >
               {{ siteName }}
             </h1>
@@ -219,7 +200,7 @@
             <div>
               <router-link
                 :to="isAuthenticated ? dashboardPath : '/login'"
-                class="btn btn-primary px-8 py-3 text-base shadow-lg shadow-primary-500/30"
+                class="btn btn-primary px-8 py-3 text-base"
               >
                 {{ isAuthenticated ? t('home.goToDashboard') : t('home.getStarted') }}
                 <Icon name="arrowRight" size="md" class="ml-2" :stroke-width="2" />
@@ -270,7 +251,7 @@
           <div
             class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
           >
-            <Icon name="swap" size="sm" class="text-primary-500" />
+            <Icon name="swap" size="sm" class="text-[var(--llmr-secondary)]" />
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
               t('home.tags.subscriptionToApi')
             }}</span>
@@ -278,7 +259,7 @@
           <div
             class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
           >
-            <Icon name="shield" size="sm" class="text-primary-500" />
+            <Icon name="shield" size="sm" class="text-[var(--llmr-secondary)]" />
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
               t('home.tags.stickySession')
             }}</span>
@@ -286,7 +267,7 @@
           <div
             class="inline-flex items-center gap-2.5 rounded-full border border-gray-200/50 bg-white/80 px-5 py-2.5 shadow-sm backdrop-blur-sm dark:border-dark-700/50 dark:bg-dark-800/80"
           >
-            <Icon name="chart" size="sm" class="text-primary-500" />
+            <Icon name="chart" size="sm" class="text-[var(--llmr-secondary)]" />
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{
               t('home.tags.realtimeBilling')
             }}</span>
@@ -297,12 +278,12 @@
         <div class="mb-12 grid gap-6 md:grid-cols-3">
           <!-- Feature 1: Unified Gateway -->
           <div
-            class="group rounded-2xl border border-gray-200/50 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 dark:border-dark-700/50 dark:bg-dark-800/60"
+            class="card p-6"
           >
             <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30 transition-transform group-hover:scale-110"
+              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
-              <Icon name="server" size="lg" class="text-white" />
+              <Icon name="server" size="lg" />
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
               {{ t('home.features.unifiedGateway') }}
@@ -314,13 +295,13 @@
 
           <!-- Feature 2: Account Pool -->
           <div
-            class="group rounded-2xl border border-gray-200/50 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 dark:border-dark-700/50 dark:bg-dark-800/60"
+            class="card p-6"
           >
             <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform group-hover:scale-110"
+              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
               <svg
-                class="h-6 w-6 text-white"
+                class="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -343,13 +324,13 @@
 
           <!-- Feature 3: Billing & Quota -->
           <div
-            class="group rounded-2xl border border-gray-200/50 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 dark:border-dark-700/50 dark:bg-dark-800/60"
+            class="card p-6"
           >
             <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/30 transition-transform group-hover:scale-110"
+              class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
               <svg
-                class="h-6 w-6 text-white"
+                class="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -387,9 +368,9 @@
             class="flex items-center gap-2 rounded-xl border border-primary-200 bg-white/60 px-5 py-3 ring-1 ring-primary-500/20 backdrop-blur-sm dark:border-primary-800 dark:bg-dark-800/60"
           >
             <div
-              class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-400 to-orange-500"
+              class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
-              <span class="text-xs font-bold text-white">C</span>
+              <span class="text-xs font-bold">C</span>
             </div>
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.claude') }}</span>
             <span
@@ -402,9 +383,9 @@
             class="flex items-center gap-2 rounded-xl border border-primary-200 bg-white/60 px-5 py-3 ring-1 ring-primary-500/20 backdrop-blur-sm dark:border-primary-800 dark:bg-dark-800/60"
           >
             <div
-              class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-green-500 to-green-600"
+              class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
-              <span class="text-xs font-bold text-white">G</span>
+              <span class="text-xs font-bold">G</span>
             </div>
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">GPT</span>
             <span
@@ -417,9 +398,9 @@
             class="flex items-center gap-2 rounded-xl border border-primary-200 bg-white/60 px-5 py-3 ring-1 ring-primary-500/20 backdrop-blur-sm dark:border-primary-800 dark:bg-dark-800/60"
           >
             <div
-              class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600"
+              class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
-              <span class="text-xs font-bold text-white">G</span>
+              <span class="text-xs font-bold">G</span>
             </div>
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.gemini') }}</span>
             <span
@@ -432,9 +413,9 @@
             class="flex items-center gap-2 rounded-xl border border-primary-200 bg-white/60 px-5 py-3 ring-1 ring-primary-500/20 backdrop-blur-sm dark:border-primary-800 dark:bg-dark-800/60"
           >
             <div
-              class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-pink-600"
+              class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--llmr-hover)] text-[var(--llmr-secondary)]"
             >
-              <span class="text-xs font-bold text-white">A</span>
+              <span class="text-xs font-bold">A</span>
             </div>
             <span class="text-sm font-medium text-gray-700 dark:text-dark-200">{{ t('home.providers.antigravity') }}</span>
             <span
@@ -590,7 +571,7 @@ onMounted(() => {
 /* Terminal Window */
 .terminal-window {
   width: 420px;
-  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(145deg, #262626 0%, #171717 100%);
   border-radius: 14px;
   box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.4),
@@ -610,7 +591,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  background: rgba(30, 41, 59, 0.8);
+  background: #2b2b2b;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -626,13 +607,13 @@ onMounted(() => {
 }
 
 .btn-close {
-  background: #ef4444;
+  background: #a3a3a3;
 }
 .btn-minimize {
-  background: #eab308;
+  background: #737373;
 }
 .btn-maximize {
-  background: #22c55e;
+  background: #525252;
 }
 
 .terminal-title {
@@ -640,7 +621,7 @@ onMounted(() => {
   text-align: center;
   font-size: 12px;
   font-family: ui-monospace, monospace;
-  color: #64748b;
+  color: #a3a3a3;
   margin-right: 52px;
 }
 
@@ -686,20 +667,20 @@ onMounted(() => {
 }
 
 .code-prompt {
-  color: #22c55e;
+  color: #a3a3a3;
   font-weight: bold;
 }
 .code-cmd {
-  color: #38bdf8;
+  color: #f5f5f5;
 }
 .code-flag {
-  color: #a78bfa;
+  color: #a3a3a3;
 }
 .code-url {
-  color: #14b8a6;
+  color: #e5e5e5;
 }
 .code-comment {
-  color: #64748b;
+  color: #a3a3a3;
   font-style: italic;
 }
 .code-success {
@@ -710,7 +691,7 @@ onMounted(() => {
   font-weight: 600;
 }
 .code-response {
-  color: #fbbf24;
+  color: #d4d4d4;
 }
 
 /* Blinking Cursor */
@@ -718,7 +699,7 @@ onMounted(() => {
   display: inline-block;
   width: 8px;
   height: 16px;
-  background: #22c55e;
+  background: #d4d4d4;
   animation: blink 1s step-end infinite;
 }
 
@@ -733,12 +714,4 @@ onMounted(() => {
   }
 }
 
-/* Dark mode adjustments */
-:deep(.dark) .terminal-window {
-  box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(20, 184, 166, 0.2),
-    0 0 40px rgba(20, 184, 166, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
 </style>

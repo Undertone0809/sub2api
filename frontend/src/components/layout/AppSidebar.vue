@@ -156,7 +156,7 @@
         :class="{ 'sidebar-link-collapsed': sidebarCollapsed }"
         :title="sidebarCollapsed ? (isDark ? t('nav.lightMode') : t('nav.darkMode')) : undefined"
       >
-        <SunIcon v-if="isDark" class="h-5 w-5 flex-shrink-0 text-amber-500" />
+        <SunIcon v-if="isDark" class="h-5 w-5 flex-shrink-0" />
         <MoonIcon v-else class="h-5 w-5 flex-shrink-0" />
         <span class="sidebar-label" :class="{ 'sidebar-label-collapsed': sidebarCollapsed }" :aria-hidden="sidebarCollapsed ? 'true' : 'false'">{{
           isDark ? t('nav.lightMode') : t('nav.darkMode')
@@ -199,6 +199,8 @@ import { sanitizeUrl } from '@/utils/url'
 import { FeatureFlags, makeSidebarFlag } from '@/utils/featureFlags'
 import { resolveSiteBillingMode } from '@/utils/siteBillingMode'
 import { useBatchImageAccess } from '@/composables/useBatchImageAccess'
+import { findImagePlaygroundMenuItem, getCustomMenuPath, IMAGE_PLAYGROUND_MENU_ID } from '@/utils/imagePlayground'
+import type { CustomMenuItem } from '@/types'
 
 interface NavItem {
   path: string
@@ -740,12 +742,7 @@ function buildSelfNavItems(withDashboard: boolean): NavItem[] {
     { path: '/affiliate', label: t('nav.affiliate'), icon: UsersIcon, hideInSimpleMode: true, featureFlag: flagAffiliate },
     { path: '/profile', label: t('nav.profile'), icon: UserIcon },
     { path: '/settings/mcp', label: t('mcp.title'), icon: MCPIcon, featureFlag: flagMCP },
-    ...customMenuItemsForUser.value.map((item): NavItem => ({
-      path: `/custom/${item.id}`,
-      label: item.label,
-      icon: null,
-      iconSvg: item.icon_svg,
-    })),
+    ...customMenuItemsForUser.value.map(toCustomNavItem),
   )
   return items
 }
@@ -773,10 +770,20 @@ const customMenuItemsForUser = computed(() => {
 })
 
 const customMenuItemsForAdmin = computed(() => {
+  const publicPlayground = findImagePlaygroundMenuItem(customMenuItemsForUser.value, 'user')
   return adminSettingsStore.customMenuItems
-    .filter((item) => item.visibility === 'admin')
+    .filter((item) => item.visibility === 'admin' && (!publicPlayground || item.id !== IMAGE_PLAYGROUND_MENU_ID))
     .sort((a, b) => a.sort_order - b.sort_order)
 })
+
+function toCustomNavItem(item: CustomMenuItem): NavItem {
+  return {
+    path: getCustomMenuPath(item.id),
+    label: item.label,
+    icon: item.id === IMAGE_PLAYGROUND_MENU_ID ? BatchImageIcon : null,
+    iconSvg: item.icon_svg,
+  }
+}
 
 // Admin navigation items
 const adminNavItems = computed((): NavItem[] => {
@@ -853,16 +860,12 @@ const adminNavItems = computed((): NavItem[] => {
     filtered.push({ path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon })
     if (flagMCP()) filtered.push({ path: '/settings/mcp', label: t('mcp.title'), icon: MCPIcon })
     filtered.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
-    for (const cm of customMenuItemsForAdmin.value) {
-      filtered.push({ path: `/custom/${cm.id}`, label: cm.label, icon: null, iconSvg: cm.icon_svg })
-    }
+    filtered.push(...customMenuItemsForAdmin.value.map(toCustomNavItem))
     return filtered
   }
 
   visible.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
-  for (const cm of customMenuItemsForAdmin.value) {
-    visible.push({ path: `/custom/${cm.id}`, label: cm.label, icon: null, iconSvg: cm.icon_svg })
-  }
+  visible.push(...customMenuItemsForAdmin.value.map(toCustomNavItem))
   return visible
 })
 

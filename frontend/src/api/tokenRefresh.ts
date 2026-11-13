@@ -11,6 +11,7 @@ const TOKEN_REFRESH_TIMEOUT_MS = 30_000
 const PEER_REFRESH_WAIT_MS = 1_000
 const PEER_REFRESH_GRACE_MS = 1_000
 const PEER_REFRESH_POLL_MS = 25
+export const AUTH_TOKENS_REFRESHED_EVENT = 'sub2api-auth-tokens-refreshed'
 
 export interface RefreshTokenResponse {
   access_token: string
@@ -22,6 +23,8 @@ export interface RefreshTokenResponse {
 export interface RefreshAuthTokensOptions {
   /** Access token attached to the request that received a 401 response. */
   failedAccessToken?: string | null
+  /** Account that owns the in-memory session requesting a refresh. */
+  expectedUserID?: number
 }
 
 interface AuthSnapshot {
@@ -33,7 +36,7 @@ interface AuthSnapshot {
 
 let inFlightRefresh: Promise<RefreshTokenResponse> | null = null
 
-function getStoredUserID(): number | null {
+export function getStoredUserID(): number | null {
   const rawUser = localStorage.getItem(AUTH_USER_KEY)
   if (!rawUser) {
     return null
@@ -129,6 +132,7 @@ function persistTokenPair(tokens: RefreshTokenResponse): void {
   localStorage.setItem(TOKEN_EXPIRES_AT_KEY, String(Date.now() + tokens.expires_in * 1000))
   // The rotating refresh token is written last so other tabs can treat its change as a commit marker.
   localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refresh_token)
+  window.dispatchEvent(new Event(AUTH_TOKENS_REFRESHED_EVENT))
 }
 
 async function requestTokenPair(
@@ -213,6 +217,9 @@ async function runRefresh(options: RefreshAuthTokensOptions): Promise<RefreshTok
 export function refreshAuthTokens(
   options: RefreshAuthTokensOptions = {}
 ): Promise<RefreshTokenResponse> {
+  if (options.expectedUserID !== undefined && getStoredUserID() !== options.expectedUserID) {
+    return Promise.reject(new Error('Session changed before token refresh'))
+  }
   if (inFlightRefresh) {
     return inFlightRefresh
   }

@@ -31,6 +31,7 @@ export default {
     refresh: 'Refresh',
     sourceMode: 'Source Build',
     sourceModeHint: 'Source build, use git pull to update',
+    llmRouteReleaseHint: 'Use the LLM Route release workflow for upgrades and rollbacks.',
     updateNow: 'Update Now',
     updating: 'Updating...',
     updateComplete: 'Update Complete',
@@ -85,6 +86,12 @@ export default {
     copyCode: 'Copy',
     copiedCode: 'Copied',
     copyCodeFailed: 'Failed'
+  },
+
+  imagePlayground: {
+    title: 'AI Image',
+    loadError: 'Could not load the image playground.',
+    retry: 'Retry',
   },
 
   // Announcements Page

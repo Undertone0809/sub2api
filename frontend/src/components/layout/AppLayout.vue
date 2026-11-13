@@ -1,8 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-dark-950">
-    <!-- Background Decoration -->
-    <div class="pointer-events-none fixed inset-0 bg-mesh-gradient"></div>
-
+  <div class="min-h-screen bg-[var(--llmr-bg)]">
     <!-- Sidebar -->
     <AppSidebar />
 
@@ -15,7 +12,7 @@
       <AppHeader />
 
       <!-- Main Content -->
-      <main class="p-4 md:p-6 lg:p-8">
+      <main :class="{ 'p-4 md:p-6 lg:p-8': !fullBleed }">
         <slot />
       </main>
     </div>
@@ -31,6 +28,8 @@ import { useOnboardingTour } from '@/composables/useOnboardingTour'
 import { useOnboardingStore } from '@/stores/onboarding'
 import AppSidebar from './AppSidebar.vue'
 import AppHeader from './AppHeader.vue'
+
+defineProps<{ fullBleed?: boolean }>()
 
 const appStore = useAppStore()
 const authStore = useAuthStore()

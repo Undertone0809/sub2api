@@ -160,6 +160,96 @@ describe('useAuthStore', () => {
 
   // --- checkAuth ---
 
+  describe('refreshRejectedAccessToken', () => {
+    const rotatedTokens = { access_token: 'rotated-access', refresh_token: 'rotated-refresh', expires_in: 3600 }
+
+    it('updates the in-memory token from the current shared refresh result', async () => {
+      mockLogin.mockResolvedValue(fakeAuthResponse)
+      mockRefreshToken.mockImplementationOnce(async () => {
+        localStorage.setItem('auth_token', rotatedTokens.access_token)
+        localStorage.setItem('refresh_token', rotatedTokens.refresh_token)
+        return rotatedTokens
+      })
+      const store = useAuthStore()
+      await store.login({ email: fakeUser.email, password: '123456' })
+      await store.refreshRejectedAccessToken(fakeAuthResponse.access_token)
+
+      expect(mockRefreshToken).toHaveBeenCalledWith({ failedAccessToken: fakeAuthResponse.access_token, expectedUserID: fakeUser.id })
+      expect(store.token).toBe(rotatedTokens.access_token)
+      await store.refreshRejectedAccessToken(fakeAuthResponse.access_token)
+      expect(mockRefreshToken).toHaveBeenCalledOnce()
+    })
+
+    it('does not repopulate the in-memory token after logout', async () => {
+      mockLogin.mockResolvedValue(fakeAuthResponse)
+      mockLogout.mockResolvedValue(undefined)
+      let resolveRefresh!: (tokens: typeof rotatedTokens) => void
+      mockRefreshToken.mockImplementationOnce(() => new Promise((resolve) => { resolveRefresh = resolve }))
+      const store = useAuthStore()
+      await store.login({ email: fakeUser.email, password: '123456' })
+      const pending = store.refreshRejectedAccessToken(fakeAuthResponse.access_token)
+      await store.logout()
+      resolveRefresh(rotatedTokens)
+      await pending
+
+      expect(store.token).toBeNull()
+      expect(store.isAuthenticated).toBe(false)
+    })
+  })
+
+  describe('persisted session changes', () => {
+    function accessTokenFor(userID: number) {
+      return `header.${btoa(JSON.stringify({ user_id: userID }))}.signature`
+    }
+
+    it('adopts a committed token rotation for the current account', async () => {
+      mockLogin.mockResolvedValue(fakeAuthResponse)
+      const store = useAuthStore()
+      await store.login({ email: fakeUser.email, password: '123456' })
+      localStorage.setItem('auth_token', accessTokenFor(fakeUser.id))
+
+      store.syncPersistedSession()
+      expect(store.token).toBe(fakeAuthResponse.access_token)
+
+      localStorage.setItem('token_expires_at', String(Date.now() + 3600_000))
+      localStorage.setItem('refresh_token', 'peer-refresh')
+      store.syncPersistedSession()
+      expect(store.getCurrentSessionToken()).toBe(accessTokenFor(fakeUser.id))
+      expect(store.token).toBe(accessTokenFor(fakeUser.id))
+    })
+
+    it('blocks the old account and leaves a replacement account and its token intact', async () => {
+      mockLogin.mockResolvedValue(fakeAuthResponse)
+      const store = useAuthStore()
+      await store.login({ email: fakeUser.email, password: '123456' })
+      let resolveUser!: (value: { data: typeof fakeUser }) => void
+      mockGetCurrentUser.mockImplementationOnce(() => new Promise((resolve) => { resolveUser = resolve }))
+      const pendingUser = store.refreshUser()
+
+      localStorage.setItem('auth_token', accessTokenFor(fakeAdminUser.id))
+      localStorage.setItem('auth_user', JSON.stringify(fakeAdminUser))
+      localStorage.setItem('refresh_token', 'other-refresh')
+      expect(store.getCurrentSessionToken()).toBe('')
+      store.syncPersistedSession()
+      resolveUser({ data: fakeUser })
+
+      await expect(pendingUser).rejects.toThrow('Session changed while refreshing the user')
+      expect(store.isAuthenticated).toBe(false)
+      expect(localStorage.getItem('auth_user')).toBe(JSON.stringify(fakeAdminUser))
+      expect(localStorage.getItem('auth_token')).toBe(accessTokenFor(fakeAdminUser.id))
+    })
+
+    it('invalidates the current account when another tab signs out', async () => {
+      mockLogin.mockResolvedValue(fakeAuthResponse)
+      const store = useAuthStore()
+      await store.login({ email: fakeUser.email, password: '123456' })
+      localStorage.clear()
+      expect(store.getCurrentSessionToken()).toBe('')
+      store.syncPersistedSession()
+      expect(store.isAuthenticated).toBe(false)
+    })
+  })
+
   describe('checkAuth', () => {
     it('从 localStorage 恢复持久化状态', () => {
       localStorage.setItem('auth_token', 'saved-token')

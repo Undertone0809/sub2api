@@ -6,6 +6,7 @@ import type { CustomMenuItem } from '@/types'
 export const useAdminSettingsStore = defineStore('adminSettings', () => {
   const loaded = ref(false)
   const loading = ref(false)
+  let settingsRequest: Promise<void> | undefined
 
   const readCachedBool = (key: string, defaultValue: boolean): boolean => {
     try {
@@ -52,10 +53,20 @@ export const useAdminSettingsStore = defineStore('adminSettings', () => {
   const customMenuItems = ref<CustomMenuItem[]>([])
 
   async function fetch(force = false): Promise<void> {
+    if (settingsRequest) return settingsRequest
     if (loaded.value && !force) return
-    if (loading.value) return
 
     loading.value = true
+    settingsRequest = loadSettings()
+    try {
+      await settingsRequest
+    } finally {
+      settingsRequest = undefined
+      loading.value = false
+    }
+  }
+
+  async function loadSettings(): Promise<void> {
     try {
       const [settings, paymentConfigResp] = await Promise.all([
         adminAPI.settings.getSettings(),
@@ -79,8 +90,6 @@ export const useAdminSettingsStore = defineStore('adminSettings', () => {
     } catch (err) {
       // Keep cached/default value: do not "flip" the UI based on a transient fetch failure.
       console.error('[adminSettings] Failed to fetch settings:', err)
-    } finally {
-      loading.value = false
     }
   }
 
