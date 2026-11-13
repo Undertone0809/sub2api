@@ -810,6 +810,11 @@
 }
 
 @layer utilities {
+  /* Keep muted labels readable in dark mode while explicit dark/hover colors win. */
+  :where(.dark) .text-gray-500 {
+    color: var(--llmr-muted);
+  }
+
   /* 玻璃效果 */
   .glass {
     @apply bg-white/80 backdrop-blur-xl dark:bg-dark-800/80;
