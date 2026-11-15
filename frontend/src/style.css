@@ -121,10 +121,10 @@
     @apply bg-gray-400 dark:bg-dark-500;
   }
 
-  /* 选中文本样式 */
+  /* Opaque paired colors stay legible on both page surfaces and dark code blocks. */
   ::selection {
-    background-color: color-mix(in srgb, var(--llmr-text) 18%, transparent);
-    color: var(--llmr-text);
+    background-color: #2f6feb;
+    color: #ffffff;
   }
 }
 
