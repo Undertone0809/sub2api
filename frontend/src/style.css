@@ -682,22 +682,81 @@
     @apply border-l-primary-500;
   }
 
+  /* Shared flat chrome with one rounded content surface. */
+  .app-shell {
+    --llmr-viewport-height: 100vh;
+    --llmr-shell-gap: 0.5rem;
+    --llmr-content-padding: 1rem;
+    min-height: var(--llmr-viewport-height);
+    background-color: var(--llmr-bg);
+  }
+
+  @supports (height: 100dvh) {
+    .app-shell {
+      --llmr-viewport-height: 100dvh;
+    }
+  }
+
+  .app-layout-main {
+    @apply relative flex min-w-0 flex-col;
+    min-height: var(--llmr-viewport-height);
+    transition: margin-left 0.3s ease;
+  }
+
+  .app-header {
+    flex-shrink: 0;
+    background-color: var(--llmr-bg);
+  }
+
+  .app-main {
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--llmr-shell-gap) var(--llmr-shell-gap);
+  }
+
+  .app-content {
+    --llmr-content-height: calc(var(--llmr-viewport-height) - 4rem - var(--llmr-shell-gap) - 2px - var(--llmr-content-padding) * 2);
+    min-width: 0;
+    min-height: calc(var(--llmr-viewport-height) - 4rem - var(--llmr-shell-gap));
+    padding: var(--llmr-content-padding);
+    border: 1px solid var(--llmr-line);
+    border-radius: 1rem;
+    background-color: var(--llmr-panel);
+  }
+
+  .app-content-full-bleed {
+    --llmr-content-height: calc(var(--llmr-viewport-height) - 4rem - var(--llmr-shell-gap) - 2px);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .app-shell {
+      --llmr-shell-gap: 1rem;
+      --llmr-content-padding: 1.5rem;
+    }
+
+  }
+
+  @media (min-width: 1024px) {
+    .app-main {
+      padding-left: 0;
+    }
+  }
+
   /* ============ 侧边栏 ============ */
   .sidebar {
     @apply fixed inset-y-0 left-0 z-40;
-    @apply w-64 border-r;
+    @apply w-64;
     @apply flex flex-col;
     @apply transition-transform duration-300;
-    background-color: var(--llmr-panel);
-    border-color: var(--llmr-line);
+    background-color: var(--llmr-bg);
     transition-property: width, transform;
   }
 
   .sidebar-header {
     @apply h-16 px-6;
     @apply flex items-center gap-3;
-    @apply border-b;
-    border-color: var(--llmr-line);
     transition:
       padding 0.2s ease,
       gap 0.2s ease;

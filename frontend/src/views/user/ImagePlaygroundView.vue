@@ -143,8 +143,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .image-playground-page {
-  height: calc(100vh - 4rem);
-  height: calc(100dvh - 4rem);
+  height: var(--llmr-content-height, calc(100vh - 4rem));
   min-width: 0;
 }
 

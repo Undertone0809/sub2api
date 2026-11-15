@@ -1,19 +1,21 @@
 <template>
-  <div class="min-h-screen bg-[var(--llmr-bg)]">
+  <div class="app-shell">
     <!-- Sidebar -->
     <AppSidebar />
 
     <!-- Main Content Area -->
     <div
-      class="relative min-h-screen transition-all duration-300"
+      class="app-layout-main"
       :class="[sidebarCollapsed ? 'lg:ml-[72px]' : 'lg:ml-64']"
     >
       <!-- Header -->
       <AppHeader />
 
       <!-- Main Content -->
-      <main :class="{ 'p-4 md:p-6 lg:p-8': !fullBleed }">
-        <slot />
+      <main class="app-main">
+        <div class="app-content" :class="{ 'app-content-full-bleed': fullBleed }">
+          <slot />
+        </div>
       </main>
     </div>
   </div>
