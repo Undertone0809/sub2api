@@ -48,7 +48,7 @@
                 :title="sidebarCollapsed ? item.label : undefined"
                 @click="handleGroupClick(item)"
               >
-                <component :is="item.icon" class="h-5 w-5 flex-shrink-0" />
+                <component :is="item.icon" class="sidebar-nav-icon h-5 w-5 flex-shrink-0" :class="navIconTone(item.path)" />
                 <span
                   class="sidebar-label sidebar-label-flex"
                   :class="{ 'sidebar-label-collapsed': sidebarCollapsed }"
@@ -71,7 +71,7 @@
                   :class="{ 'sidebar-link-active': route.path === child.path }"
                   @click="handleMenuItemClick(child.path)"
                 >
-                  <component :is="child.icon" class="h-4 w-4 flex-shrink-0" />
+                  <component :is="child.icon" class="sidebar-nav-icon h-4 w-4 flex-shrink-0" :class="navIconTone(child.path)" />
                   <span>{{ child.label }}</span>
                 </router-link>
               </div>
@@ -95,7 +95,7 @@
               @click="handleMenuItemClick(item.path)"
             >
               <span v-if="item.iconSvg" class="h-5 w-5 flex-shrink-0 sidebar-svg-icon" v-html="sanitizeSvg(item.iconSvg)"></span>
-              <component v-else :is="item.icon" class="h-5 w-5 flex-shrink-0" />
+              <component v-else :is="item.icon" class="sidebar-nav-icon h-5 w-5 flex-shrink-0" :class="navIconTone(item.path)" />
               <span class="sidebar-label" :class="{ 'sidebar-label-collapsed': sidebarCollapsed }" :aria-hidden="sidebarCollapsed ? 'true' : 'false'">{{ item.label }}</span>
             </router-link>
           </template>
@@ -120,7 +120,7 @@
             @click="handleMenuItemClick(item.path)"
           >
             <span v-if="item.iconSvg" class="h-5 w-5 flex-shrink-0 sidebar-svg-icon" v-html="sanitizeSvg(item.iconSvg)"></span>
-            <component v-else :is="item.icon" class="h-5 w-5 flex-shrink-0" />
+            <component v-else :is="item.icon" class="sidebar-nav-icon h-5 w-5 flex-shrink-0" :class="navIconTone(item.path)" />
             <span class="sidebar-label" :class="{ 'sidebar-label-collapsed': sidebarCollapsed }" :aria-hidden="sidebarCollapsed ? 'true' : 'false'">{{ item.label }}</span>
           </router-link>
         </div>
@@ -140,7 +140,7 @@
             @click="handleMenuItemClick(item.path)"
           >
             <span v-if="item.iconSvg" class="h-5 w-5 flex-shrink-0 sidebar-svg-icon" v-html="sanitizeSvg(item.iconSvg)"></span>
-            <component v-else :is="item.icon" class="h-5 w-5 flex-shrink-0" />
+            <component v-else :is="item.icon" class="sidebar-nav-icon h-5 w-5 flex-shrink-0" :class="navIconTone(item.path)" />
             <span class="sidebar-label" :class="{ 'sidebar-label-collapsed': sidebarCollapsed }" :aria-hidden="sidebarCollapsed ? 'true' : 'false'">{{ item.label }}</span>
           </router-link>
         </div>
@@ -221,6 +221,56 @@ interface NavItem {
    * 开关切换时菜单自动更新。
    */
   featureFlag?: () => boolean | undefined
+}
+
+// Route semantics keep colors stable across feature flags, ordering and collapsed menus.
+// Uploaded iconSvg markup is rendered separately and keeps its own colors.
+const navIconTones: Record<string, string> = {
+  '/dashboard': 'cumulative',
+  '/keys': 'key',
+  '/batch-image': 'creative',
+  [getCustomMenuPath(IMAGE_PLAYGROUND_MENU_ID)]: 'creative',
+  '/usage': 'usage',
+  '/available-channels': 'infrastructure',
+  '/monitor': 'usage',
+  '/subscriptions': 'billing',
+  '/purchase': 'billing',
+  '/orders': 'billing',
+  '/redeem': 'billing',
+  '/affiliate': 'people',
+  '/profile': 'people',
+  '/settings/mcp': 'infrastructure',
+  '/admin/dashboard': 'cumulative',
+  '/admin/ops': 'usage',
+  '/admin/users': 'people',
+  '/admin/groups': 'billing',
+  '/admin/channels': 'infrastructure',
+  '/admin/channels/pricing': 'billing',
+  '/admin/channels/monitor': 'usage',
+  '/admin/subscriptions': 'billing',
+  '/admin/accounts': 'infrastructure',
+  '/admin/plugins': 'infrastructure',
+  '/admin/announcements': 'tokens',
+  '/admin/proxies': 'infrastructure',
+  '/admin/security-audit': 'tokens',
+  '/admin/risk-control': 'tokens',
+  '/admin/prompt-audit': 'tokens',
+  '/admin/redeem': 'billing',
+  '/admin/promo-codes': 'billing',
+  '/admin/affiliates': 'people',
+  '/admin/affiliates/invites': 'people',
+  '/admin/affiliates/rebates': 'billing',
+  '/admin/affiliates/transfers': 'billing',
+  '/admin/orders': 'billing',
+  '/admin/orders/dashboard': 'billing',
+  '/admin/orders/plans': 'billing',
+  '/admin/usage': 'usage',
+  '/admin/audit-logs': 'tokens',
+}
+
+function navIconTone(path: string): string | undefined {
+  const tone = navIconTones[path]
+  return tone ? `icon-tone-${tone}` : undefined
 }
 
 // applyFeatureFlags 递归过滤掉 featureFlag() === false 的节点（含子节点）。

@@ -23,6 +23,25 @@
     --llmr-action-text: #ffffff;
     --llmr-action-hover: #404040;
     --llmr-focus: #737373;
+    /* Semantic icon accents; surfaces, typography and actions stay neutral. */
+    --llmr-icon-key: #1d4ed8;
+    --llmr-icon-key-bg: #eff6ff;
+    --llmr-icon-usage: #15803d;
+    --llmr-icon-usage-bg: #ecfdf3;
+    --llmr-icon-tokens: #b45309;
+    --llmr-icon-tokens-bg: #fffbeb;
+    --llmr-icon-cumulative: #4338ca;
+    --llmr-icon-cumulative-bg: #eef2ff;
+    --llmr-icon-billing: #7e22ce;
+    --llmr-icon-billing-bg: #faf5ff;
+    --llmr-icon-response: #be185d;
+    --llmr-icon-response-bg: #fff1f2;
+    --llmr-icon-infrastructure: #0e7490;
+    --llmr-icon-infrastructure-bg: #ecfeff;
+    --llmr-icon-people: #0f766e;
+    --llmr-icon-people-bg: #f0fdfa;
+    --llmr-icon-creative: #a21caf;
+    --llmr-icon-creative-bg: #fdf4ff;
     accent-color: var(--llmr-focus);
   }
 
@@ -41,6 +60,25 @@
     --llmr-action-text: #171717;
     --llmr-action-hover: #ffffff;
     --llmr-focus: #a3a3a3;
+    /* Semantic icon accents; surfaces, typography and actions stay neutral. */
+    --llmr-icon-key: #93c5fd;
+    --llmr-icon-key-bg: #172642;
+    --llmr-icon-usage: #86efac;
+    --llmr-icon-usage-bg: #153025;
+    --llmr-icon-tokens: #fcd34d;
+    --llmr-icon-tokens-bg: #362b16;
+    --llmr-icon-cumulative: #a5b4fc;
+    --llmr-icon-cumulative-bg: #252342;
+    --llmr-icon-billing: #d8b4fe;
+    --llmr-icon-billing-bg: #30203f;
+    --llmr-icon-response: #fda4af;
+    --llmr-icon-response-bg: #3d202a;
+    --llmr-icon-infrastructure: #67e8f9;
+    --llmr-icon-infrastructure-bg: #16333a;
+    --llmr-icon-people: #5eead4;
+    --llmr-icon-people-bg: #19332e;
+    --llmr-icon-creative: #f0abfc;
+    --llmr-icon-creative-bg: #39203b;
   }
 
   body {
@@ -321,9 +359,59 @@
     @apply bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400;
   }
 
+  /* Shared by explicit metric modifiers and built-in navigation icons only. */
+  .icon-tone-key {
+    --llmr-icon-color: var(--llmr-icon-key);
+    --llmr-icon-background: var(--llmr-icon-key-bg);
+  }
+
+  .icon-tone-usage {
+    --llmr-icon-color: var(--llmr-icon-usage);
+    --llmr-icon-background: var(--llmr-icon-usage-bg);
+  }
+
+  .icon-tone-tokens {
+    --llmr-icon-color: var(--llmr-icon-tokens);
+    --llmr-icon-background: var(--llmr-icon-tokens-bg);
+  }
+
+  .icon-tone-cumulative {
+    --llmr-icon-color: var(--llmr-icon-cumulative);
+    --llmr-icon-background: var(--llmr-icon-cumulative-bg);
+  }
+
+  .icon-tone-billing {
+    --llmr-icon-color: var(--llmr-icon-billing);
+    --llmr-icon-background: var(--llmr-icon-billing-bg);
+  }
+
+  .icon-tone-response {
+    --llmr-icon-color: var(--llmr-icon-response);
+    --llmr-icon-background: var(--llmr-icon-response-bg);
+  }
+
+  .icon-tone-infrastructure {
+    --llmr-icon-color: var(--llmr-icon-infrastructure);
+    --llmr-icon-background: var(--llmr-icon-infrastructure-bg);
+  }
+
+  .icon-tone-people {
+    --llmr-icon-color: var(--llmr-icon-people);
+    --llmr-icon-background: var(--llmr-icon-people-bg);
+  }
+
+  .icon-tone-creative {
+    --llmr-icon-color: var(--llmr-icon-creative);
+    --llmr-icon-background: var(--llmr-icon-creative-bg);
+  }
+
   .metric-icon {
-    background-color: var(--llmr-hover);
-    color: var(--llmr-secondary);
+    background-color: var(--llmr-icon-background, var(--llmr-hover));
+    color: var(--llmr-icon-color, var(--llmr-secondary));
+  }
+
+  .sidebar-nav-icon {
+    color: var(--llmr-icon-color, var(--llmr-secondary));
   }
 
   .stat-icon-success {

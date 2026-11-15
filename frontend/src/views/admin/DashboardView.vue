@@ -12,7 +12,7 @@
           <!-- Total API Keys -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-key rounded-lg p-2">
                 <Icon name="key" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -32,7 +32,7 @@
           <!-- Service Accounts -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-infrastructure rounded-lg p-2">
                 <Icon name="server" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -57,7 +57,7 @@
           <!-- Today Requests -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-usage rounded-lg p-2">
                 <Icon name="chart" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -77,7 +77,7 @@
           <!-- New Users Today -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-people rounded-lg p-2">
                 <Icon name="userPlus" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -100,7 +100,7 @@
           <!-- Today Tokens -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-tokens rounded-lg p-2">
                 <Icon name="cube" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -136,7 +136,7 @@
           <!-- Total Tokens -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-cumulative rounded-lg p-2">
                 <Icon name="database" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -172,7 +172,7 @@
           <!-- Performance (RPM/TPM) -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-usage rounded-lg p-2">
                 <Icon name="bolt" size="md" :stroke-width="2" />
               </div>
               <div class="flex-1">
@@ -198,7 +198,7 @@
           <!-- Avg Response Time -->
           <div class="card p-4">
             <div class="flex items-center gap-3">
-              <div class="metric-icon rounded-lg p-2">
+              <div class="metric-icon icon-tone-response rounded-lg p-2">
                 <Icon name="clock" size="md" :stroke-width="2" />
               </div>
               <div>
@@ -230,7 +230,7 @@
               class="group flex items-center gap-3 rounded-lg bg-gray-50 p-3 text-left transition-colors hover:bg-[var(--llmr-hover)] dark:bg-dark-800/50"
               @click="router.push('/batch-image')"
             >
-              <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg metric-icon">
+              <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg metric-icon icon-tone-creative">
                 <Icon name="sparkles" size="md" :stroke-width="2" />
               </span>
               <span class="min-w-0 flex-1">
@@ -248,7 +248,7 @@
               class="group flex items-center gap-3 rounded-lg bg-gray-50 p-3 text-left transition-colors hover:bg-[var(--llmr-hover)] dark:bg-dark-800/50"
               @click="router.push('/admin/groups')"
             >
-              <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg metric-icon">
+              <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg metric-icon icon-tone-billing">
                 <Icon name="grid" size="md" :stroke-width="2" />
               </span>
               <span class="min-w-0 flex-1">
