@@ -122,7 +122,8 @@
   }
 
   /* Opaque paired colors stay legible on both page surfaces and dark code blocks. */
-  ::selection {
+  ::selection,
+  html .llmr-image-playground ::selection {
     background-color: #2f6feb;
     color: #ffffff;
   }
