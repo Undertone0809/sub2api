@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useChartTheme } from '@/composables/useChartTheme'
 import { Chart as ChartJS, ArcElement, Legend, Tooltip } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
 import type { OpsErrorDistributionResponse } from '@/api/admin/ops'
@@ -21,14 +22,13 @@ const emit = defineEmits<{
 }>()
 const { t } = useI18n()
 
-const isDarkMode = computed(() => document.documentElement.classList.contains('dark'))
-const colors = computed(() => ({
+const chartTheme = useChartTheme()
+const colors = {
   blue: '#3b82f6',
   red: '#ef4444',
   orange: '#f59e0b',
-  gray: '#9ca3af',
-  text: isDarkMode.value ? '#9ca3af' : '#6b7280'
-}))
+  gray: '#a3a3a3'
+}
 
 const totalSlaErrors = computed(() =>
   (props.data?.items ?? []).reduce((total, item) => total + Number(item.sla || 0), 0)
@@ -68,10 +68,10 @@ const categories = computed<ErrorCategory[]>(() => {
   }
 
   const out: ErrorCategory[] = []
-  if (upstream > 0) out.push({ label: t('admin.ops.upstream'), count: upstream, color: colors.value.orange })
-  if (client > 0) out.push({ label: t('admin.ops.client'), count: client, color: colors.value.blue })
-  if (system > 0) out.push({ label: t('admin.ops.system'), count: system, color: colors.value.red })
-  if (other > 0) out.push({ label: t('admin.ops.other'), count: other, color: colors.value.gray })
+  if (upstream > 0) out.push({ label: t('admin.ops.upstream'), count: upstream, color: colors.orange })
+  if (client > 0) out.push({ label: t('admin.ops.client'), count: client, color: colors.blue })
+  if (system > 0) out.push({ label: t('admin.ops.system'), count: system, color: colors.red })
+  if (other > 0) out.push({ label: t('admin.ops.other'), count: other, color: colors.gray })
   return out
 })
 
@@ -100,9 +100,9 @@ const options = computed(() => ({
   plugins: {
     legend: { display: false },
     tooltip: {
-      backgroundColor: isDarkMode.value ? '#1f2937' : '#ffffff',
-      titleColor: isDarkMode.value ? '#f3f4f6' : '#111827',
-      bodyColor: isDarkMode.value ? '#d1d5db' : '#4b5563'
+      backgroundColor: chartTheme.value.tooltipBackground,
+      titleColor: chartTheme.value.tooltipTitle,
+      bodyColor: chartTheme.value.tooltipText
     }
   }
 }))

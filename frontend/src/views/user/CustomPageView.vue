@@ -455,7 +455,7 @@ onUnmounted(() => {
 <style scoped>
 .custom-page-layout {
   @apply flex flex-col;
-  height: calc(100vh - 64px - 4rem);
+  height: var(--llmr-content-height, calc(100vh - 64px - 4rem));
 }
 
 .toc-sidebar {
@@ -572,7 +572,7 @@ onUnmounted(() => {
   font-size: 12px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.15);
-  color: #e2e8f0;
+  color: #e5e5e5;
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   opacity: 0;

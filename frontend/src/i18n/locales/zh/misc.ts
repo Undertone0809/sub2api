@@ -31,6 +31,7 @@ export default {
     refresh: '刷新',
     sourceMode: '源码构建',
     sourceModeHint: '源码构建请使用 git pull 更新',
+    llmRouteReleaseHint: 'LLM Route 由运维发布流程升级或回退。',
     updateNow: '立即更新',
     updating: '正在更新...',
     updateComplete: '更新完成',
@@ -83,6 +84,12 @@ export default {
     copyCode: '复制',
     copiedCode: '已复制',
     copyCodeFailed: '失败'
+  },
+
+  imagePlayground: {
+    title: 'AI 生图',
+    loadError: '暂时无法加载 AI 生图。',
+    retry: '重试',
   },
 
   // Announcements Page
