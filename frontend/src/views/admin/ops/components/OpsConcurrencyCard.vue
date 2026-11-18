@@ -602,7 +602,7 @@ watch(
 <style scoped>
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+  scrollbar-color: color-mix(in srgb, var(--llmr-muted) 35%, transparent) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -614,11 +614,11 @@ watch(
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.3);
+  background-color: color-mix(in srgb, var(--llmr-muted) 35%, transparent);
   border-radius: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(156, 163, 175, 0.5);
+  background-color: var(--llmr-muted);
 }
 </style>

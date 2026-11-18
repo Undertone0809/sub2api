@@ -69,6 +69,15 @@ func TestUpdateServicePerformUpdateNoUpdateReturnsSentinel(t *testing.T) {
 	require.ErrorIs(t, err, ErrNoUpdateAvailable)
 }
 
+func TestLLMRouteBuildPreservesManagedConsole(t *testing.T) {
+	svc := NewUpdateService(nil, nil, "0.2.21", llmRouteBuildType)
+	ctx := context.Background()
+
+	require.ErrorIs(t, svc.PerformUpdate(ctx), ErrLLMRouteManagedRelease)
+	require.ErrorIs(t, svc.Rollback(), ErrLLMRouteManagedRelease)
+	require.ErrorIs(t, svc.RollbackToVersion(ctx, "0.2.20"), ErrLLMRouteManagedRelease)
+}
+
 func newRollbackTestService(current string, releases []*GitHubRelease) *UpdateService {
 	return NewUpdateService(
 		&updateServiceCacheStub{},

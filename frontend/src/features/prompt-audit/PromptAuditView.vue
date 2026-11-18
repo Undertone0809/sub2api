@@ -213,9 +213,10 @@ const SaveToggle = defineComponent({
         'aria-checked': props.modelValue,
         'aria-label': props.label,
         disabled: props.disabled,
+        'aria-disabled': props.disabled,
         class: [
           'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
-          props.modelValue ? 'bg-primary-600' : 'bg-gray-300 dark:bg-dark-600',
+          props.modelValue ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-300 dark:bg-dark-600',
           props.disabled ? 'cursor-not-allowed' : 'cursor-pointer',
         ],
         onClick: (event: MouseEvent) => {

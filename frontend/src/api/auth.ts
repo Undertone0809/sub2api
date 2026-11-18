@@ -4,7 +4,7 @@
  */
 
 import { apiClient } from './client'
-import { refreshAuthTokens, type RefreshTokenResponse } from './tokenRefresh'
+import { refreshAuthTokens, type RefreshAuthTokensOptions, type RefreshTokenResponse } from './tokenRefresh'
 export type { RefreshTokenResponse } from './tokenRefresh'
 import type {
   LoginRequest,
@@ -325,8 +325,8 @@ export async function prepareOAuthBindAccessTokenCookie(): Promise<void> {
  * Refresh the access token using the refresh token
  * @returns New token pair
  */
-export async function refreshToken(): Promise<RefreshTokenResponse> {
-  return refreshAuthTokens()
+export async function refreshToken(options?: RefreshAuthTokensOptions): Promise<RefreshTokenResponse> {
+  return refreshAuthTokens(options)
 }
 
 /**

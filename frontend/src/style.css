@@ -4,21 +4,87 @@
 
 @layer base {
   * {
-    @apply border-gray-200 dark:border-dark-700;
+    border-color: var(--llmr-line);
   }
 
   html {
     @apply scroll-smooth antialiased;
     color-scheme: light;
+    --llmr-bg: #f7f7f7;
+    --llmr-panel: #ffffff;
+    --llmr-elevated: #ffffff;
+    --llmr-text: #171717;
+    --llmr-secondary: #424242;
+    --llmr-muted: #626262;
+    --llmr-line: #e4e4e4;
+    --llmr-hover: #efefef;
+    --llmr-selected: #e4e4e4;
+    --llmr-action: #262626;
+    --llmr-action-text: #ffffff;
+    --llmr-action-hover: #404040;
+    --llmr-focus: #737373;
+    /* Semantic icon accents; surfaces, typography and actions stay neutral. */
+    --llmr-icon-key: #1d4ed8;
+    --llmr-icon-key-bg: #eff6ff;
+    --llmr-icon-usage: #15803d;
+    --llmr-icon-usage-bg: #ecfdf3;
+    --llmr-icon-tokens: #b45309;
+    --llmr-icon-tokens-bg: #fffbeb;
+    --llmr-icon-cumulative: #4338ca;
+    --llmr-icon-cumulative-bg: #eef2ff;
+    --llmr-icon-billing: #7e22ce;
+    --llmr-icon-billing-bg: #faf5ff;
+    --llmr-icon-response: #be185d;
+    --llmr-icon-response-bg: #fff1f2;
+    --llmr-icon-infrastructure: #0e7490;
+    --llmr-icon-infrastructure-bg: #ecfeff;
+    --llmr-icon-people: #0f766e;
+    --llmr-icon-people-bg: #f0fdfa;
+    --llmr-icon-creative: #a21caf;
+    --llmr-icon-creative-bg: #fdf4ff;
+    accent-color: var(--llmr-focus);
   }
 
   .dark {
     color-scheme: dark;
+    --llmr-bg: #111111;
+    --llmr-panel: #181818;
+    --llmr-elevated: #222222;
+    --llmr-text: #f5f5f5;
+    --llmr-secondary: #d4d4d4;
+    --llmr-muted: #a3a3a3;
+    --llmr-line: #323232;
+    --llmr-hover: #262626;
+    --llmr-selected: #343434;
+    --llmr-action: #e5e5e5;
+    --llmr-action-text: #171717;
+    --llmr-action-hover: #ffffff;
+    --llmr-focus: #a3a3a3;
+    /* Semantic icon accents; surfaces, typography and actions stay neutral. */
+    --llmr-icon-key: #93c5fd;
+    --llmr-icon-key-bg: #172642;
+    --llmr-icon-usage: #86efac;
+    --llmr-icon-usage-bg: #153025;
+    --llmr-icon-tokens: #fcd34d;
+    --llmr-icon-tokens-bg: #362b16;
+    --llmr-icon-cumulative: #a5b4fc;
+    --llmr-icon-cumulative-bg: #252342;
+    --llmr-icon-billing: #d8b4fe;
+    --llmr-icon-billing-bg: #30203f;
+    --llmr-icon-response: #fda4af;
+    --llmr-icon-response-bg: #3d202a;
+    --llmr-icon-infrastructure: #67e8f9;
+    --llmr-icon-infrastructure-bg: #16333a;
+    --llmr-icon-people: #5eead4;
+    --llmr-icon-people-bg: #19332e;
+    --llmr-icon-creative: #f0abfc;
+    --llmr-icon-creative-bg: #39203b;
   }
 
   body {
-    @apply bg-gray-50 text-gray-900 dark:bg-dark-950 dark:text-gray-100;
     @apply min-h-screen;
+    background-color: var(--llmr-bg);
+    color: var(--llmr-text);
   }
 
   /* 自定义滚动条 - 仅针对 Firefox，避免 Chrome 取消 webkit 的全局定制 */
@@ -30,12 +96,7 @@
 
     *:hover,
     *:focus-within {
-      scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
-    }
-
-    .dark *:hover,
-    .dark *:focus-within {
-      scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
+      scrollbar-color: color-mix(in srgb, var(--llmr-muted) 45%, transparent) transparent;
     }
   }
 
@@ -60,12 +121,12 @@
     @apply bg-gray-400 dark:bg-dark-500;
   }
 
-  /* 选中文本样式 */
-  ::selection {
-    @apply bg-primary-500/20 text-primary-900 dark:text-primary-100;
+  /* Opaque paired colors stay legible on both page surfaces and dark code blocks. */
+  ::selection,
+  html .llmr-image-playground ::selection {
+    background-color: #2f6feb;
+    color: #ffffff;
   }
-
-
 }
 
 @layer components {
@@ -74,24 +135,33 @@
     @apply inline-flex items-center justify-center gap-2;
     @apply rounded-xl px-4 py-2.5 text-sm font-medium;
     @apply transition-all duration-200 ease-out;
-    @apply focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     @apply disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50;
     @apply active:scale-[0.98];
+    --tw-ring-color: var(--llmr-focus);
+    --tw-ring-offset-color: var(--llmr-panel);
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-500 to-primary-600;
-    @apply text-white shadow-md shadow-primary-500/25;
-    @apply hover:from-primary-600 hover:to-primary-700 hover:shadow-lg hover:shadow-primary-500/30;
-    @apply dark:shadow-primary-500/20;
+    @apply shadow-sm;
+    background-color: var(--llmr-action);
+    color: var(--llmr-action-text);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--llmr-action-hover);
   }
 
   .btn-secondary {
-    @apply bg-white dark:bg-dark-800;
-    @apply text-gray-700 dark:text-gray-200;
-    @apply border border-gray-200 dark:border-dark-600;
-    @apply shadow-sm hover:bg-gray-50 dark:hover:bg-dark-700;
-    @apply hover:border-gray-300 dark:hover:border-dark-500;
+    @apply border shadow-sm;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
+    color: var(--llmr-secondary);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--llmr-hover);
+    border-color: var(--llmr-focus);
   }
 
   .btn-ghost {
@@ -166,13 +236,22 @@
   /* ============ 输入框样式 ============ */
   .input {
     @apply w-full rounded-xl px-4 py-2.5 text-sm;
-    @apply bg-white dark:bg-dark-800;
-    @apply border border-gray-200 dark:border-dark-600;
-    @apply text-gray-900 dark:text-gray-100;
-    @apply placeholder:text-gray-400 dark:placeholder:text-dark-400;
+    @apply border;
     @apply transition-all duration-200;
-    @apply focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/30;
+    @apply focus:outline-none focus:ring-2;
     @apply disabled:cursor-not-allowed disabled:bg-gray-100 dark:disabled:bg-dark-900;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
+    color: var(--llmr-text);
+    --tw-ring-color: color-mix(in srgb, var(--llmr-focus) 28%, transparent);
+  }
+
+  .input::placeholder {
+    color: var(--llmr-muted);
+  }
+
+  .input:focus {
+    border-color: var(--llmr-focus);
   }
 
   .dark .input[type='date'],
@@ -183,8 +262,13 @@
     color-scheme: dark;
   }
 
-  .input-error {
-    @apply border-red-500 focus:border-red-500 focus:ring-red-500/30;
+  .input-error,
+  .input-error:focus {
+    @apply border-red-500;
+  }
+
+  .input-error:focus {
+    @apply ring-red-500/30;
   }
 
   .input-label {
@@ -226,11 +310,12 @@
 
   /* ============ 卡片样式 ============ */
   .card {
-    @apply bg-white dark:bg-dark-800/50;
     @apply rounded-2xl;
-    @apply border border-gray-100 dark:border-dark-700/50;
+    @apply border;
     @apply shadow-card;
     @apply transition-all duration-300;
+    background-color: var(--llmr-panel);
+    border-color: var(--llmr-line);
   }
 
   .card-hover {
@@ -273,6 +358,61 @@
 
   .stat-icon-primary {
     @apply bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400;
+  }
+
+  /* Shared by explicit metric modifiers and built-in navigation icons only. */
+  .icon-tone-key {
+    --llmr-icon-color: var(--llmr-icon-key);
+    --llmr-icon-background: var(--llmr-icon-key-bg);
+  }
+
+  .icon-tone-usage {
+    --llmr-icon-color: var(--llmr-icon-usage);
+    --llmr-icon-background: var(--llmr-icon-usage-bg);
+  }
+
+  .icon-tone-tokens {
+    --llmr-icon-color: var(--llmr-icon-tokens);
+    --llmr-icon-background: var(--llmr-icon-tokens-bg);
+  }
+
+  .icon-tone-cumulative {
+    --llmr-icon-color: var(--llmr-icon-cumulative);
+    --llmr-icon-background: var(--llmr-icon-cumulative-bg);
+  }
+
+  .icon-tone-billing {
+    --llmr-icon-color: var(--llmr-icon-billing);
+    --llmr-icon-background: var(--llmr-icon-billing-bg);
+  }
+
+  .icon-tone-response {
+    --llmr-icon-color: var(--llmr-icon-response);
+    --llmr-icon-background: var(--llmr-icon-response-bg);
+  }
+
+  .icon-tone-infrastructure {
+    --llmr-icon-color: var(--llmr-icon-infrastructure);
+    --llmr-icon-background: var(--llmr-icon-infrastructure-bg);
+  }
+
+  .icon-tone-people {
+    --llmr-icon-color: var(--llmr-icon-people);
+    --llmr-icon-background: var(--llmr-icon-people-bg);
+  }
+
+  .icon-tone-creative {
+    --llmr-icon-color: var(--llmr-icon-creative);
+    --llmr-icon-background: var(--llmr-icon-creative-bg);
+  }
+
+  .metric-icon {
+    background-color: var(--llmr-icon-background, var(--llmr-hover));
+    color: var(--llmr-icon-color, var(--llmr-secondary));
+  }
+
+  .sidebar-nav-icon {
+    color: var(--llmr-icon-color, var(--llmr-secondary));
   }
 
   .stat-icon-success {
@@ -319,8 +459,8 @@
   .table th {
     @apply px-4 py-3 text-left font-medium;
     @apply text-gray-600 dark:text-dark-300;
-    @apply bg-gray-50 dark:bg-dark-800/50;
     @apply border-b border-gray-200 dark:border-dark-700;
+    background-color: var(--llmr-hover);
   }
 
   .table td {
@@ -371,20 +511,24 @@
   /* ============ 下拉菜单 ============ */
   .dropdown {
     @apply absolute z-50;
-    @apply bg-white dark:bg-dark-800;
     @apply rounded-xl;
-    @apply border border-gray-200 dark:border-dark-700;
+    @apply border;
     @apply shadow-lg;
     @apply py-1;
     @apply origin-top-right animate-scale-in;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
   }
 
   .dropdown-item {
     @apply px-4 py-2 text-sm;
     @apply text-gray-700 dark:text-gray-300;
-    @apply hover:bg-gray-100 dark:hover:bg-dark-700;
     @apply cursor-pointer transition-colors;
     @apply flex items-center gap-2;
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--llmr-hover);
   }
 
   /* ============ 模态框 ============ */
@@ -397,10 +541,11 @@
   .modal-content {
     @apply w-full;
     @apply max-h-[95vh] sm:max-h-[90vh];
-    @apply bg-white dark:bg-dark-800;
     @apply rounded-2xl shadow-2xl;
-    @apply border border-gray-200 dark:border-dark-700;
+    @apply border;
     @apply flex flex-col;
+    background-color: var(--llmr-elevated);
+    border-color: var(--llmr-line);
   }
 
   .modal-header {
@@ -490,8 +635,9 @@
   .dialog-container {
     @apply flex w-full flex-col;
     @apply max-h-[90vh];
-    @apply rounded-2xl bg-white dark:bg-dark-800;
+    @apply rounded-2xl;
     @apply shadow-xl;
+    background-color: var(--llmr-elevated);
   }
 
   .dialog-header {
@@ -505,8 +651,8 @@
 
   .dialog-footer {
     @apply border-t border-gray-100 px-6 py-4 dark:border-dark-700;
-    @apply bg-gray-50/60 dark:bg-dark-900/40;
     @apply flex items-center justify-end gap-3;
+    background-color: var(--llmr-bg);
   }
 
   /* ============ Toast 通知 ============ */
@@ -536,20 +682,81 @@
     @apply border-l-primary-500;
   }
 
+  /* Shared flat chrome with one rounded content surface. */
+  .app-shell {
+    --llmr-viewport-height: 100vh;
+    --llmr-shell-gap: 0.5rem;
+    --llmr-content-padding: 1rem;
+    min-height: var(--llmr-viewport-height);
+    background-color: var(--llmr-bg);
+  }
+
+  @supports (height: 100dvh) {
+    .app-shell {
+      --llmr-viewport-height: 100dvh;
+    }
+  }
+
+  .app-layout-main {
+    @apply relative flex min-w-0 flex-col;
+    min-height: var(--llmr-viewport-height);
+    transition: margin-left 0.3s ease;
+  }
+
+  .app-header {
+    flex-shrink: 0;
+    background-color: var(--llmr-bg);
+  }
+
+  .app-main {
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--llmr-shell-gap) var(--llmr-shell-gap);
+  }
+
+  .app-content {
+    --llmr-content-height: calc(var(--llmr-viewport-height) - 4rem - var(--llmr-shell-gap) - 2px - var(--llmr-content-padding) * 2);
+    min-width: 0;
+    min-height: calc(var(--llmr-viewport-height) - 4rem - var(--llmr-shell-gap));
+    padding: var(--llmr-content-padding);
+    border: 1px solid var(--llmr-line);
+    border-radius: 1rem;
+    background-color: var(--llmr-panel);
+  }
+
+  .app-content-full-bleed {
+    --llmr-content-height: calc(var(--llmr-viewport-height) - 4rem - var(--llmr-shell-gap) - 2px);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .app-shell {
+      --llmr-shell-gap: 1rem;
+      --llmr-content-padding: 1.5rem;
+    }
+
+  }
+
+  @media (min-width: 1024px) {
+    .app-main {
+      padding-left: 0;
+    }
+  }
+
   /* ============ 侧边栏 ============ */
   .sidebar {
     @apply fixed inset-y-0 left-0 z-40;
-    @apply w-64 bg-white dark:bg-dark-900;
-    @apply border-r border-gray-200 dark:border-dark-800;
+    @apply w-64;
     @apply flex flex-col;
     @apply transition-transform duration-300;
+    background-color: var(--llmr-bg);
     transition-property: width, transform;
   }
 
   .sidebar-header {
     @apply h-16 px-6;
     @apply flex items-center gap-3;
-    @apply border-b border-gray-100 dark:border-dark-800;
     transition:
       padding 0.2s ease,
       gap 0.2s ease;
@@ -563,18 +770,21 @@
     @apply flex items-center gap-3 rounded-xl py-2.5;
     @apply overflow-hidden;
     @apply text-sm font-medium;
-    @apply text-gray-600 dark:text-dark-300;
-    @apply transition-all duration-200;
-    @apply hover:bg-gray-100 dark:hover:bg-dark-800;
-    @apply hover:text-gray-900 dark:hover:text-white;
+    @apply transition-colors duration-200;
+    color: var(--llmr-secondary);
     padding-left: 1.0625rem;
     padding-right: 0.875rem;
   }
 
+  .sidebar-link:hover,
   .sidebar-link-active {
-    @apply bg-primary-50 dark:bg-primary-900/20;
-    @apply text-primary-600 dark:text-primary-400;
-    @apply hover:bg-primary-100 dark:hover:bg-primary-900/30;
+    background-color: var(--llmr-hover);
+    color: var(--llmr-text);
+  }
+
+  .sidebar-link-active {
+    @apply font-semibold;
+    box-shadow: inset 0 0 0 1px var(--llmr-line);
   }
 
   .sidebar-section {
@@ -584,7 +794,7 @@
   .sidebar-section-title {
     @apply mb-2 px-3;
     @apply text-xs font-semibold uppercase tracking-wider;
-    @apply text-gray-400 dark:text-dark-500;
+    color: var(--llmr-muted);
   }
 
   /* ============ 页面头部 ============ */
@@ -671,7 +881,7 @@
   }
 
   .switch-active {
-    @apply bg-primary-500;
+    @apply bg-emerald-600 dark:bg-emerald-500;
   }
 
   .switch-thumb {
@@ -748,9 +958,9 @@
 }
 
 @layer utilities {
-  /* 文字渐变 */
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent;
+  /* Keep muted labels readable in dark mode while explicit dark/hover colors win. */
+  :where(.dark) .text-gray-500 {
+    color: var(--llmr-muted);
   }
 
   /* 玻璃效果 */

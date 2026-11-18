@@ -1,5 +1,5 @@
 <template>
-  <header class="glass sticky top-0 z-30 border-b border-gray-200/50 dark:border-dark-700/50">
+  <header class="app-header sticky top-0 z-30">
     <div class="flex h-16 items-center justify-between gap-2 px-2 sm:px-4 md:px-6">
       <!-- Left: Mobile Menu Toggle + Page Title -->
       <div class="flex shrink-0 items-center gap-2 sm:gap-4">
@@ -11,7 +11,7 @@
           <Icon name="menu" size="md" />
         </button>
 
-        <div class="hidden lg:block">
+        <div :class="route.name === IMAGE_PLAYGROUND_ROUTE_NAME ? 'sr-only lg:not-sr-only' : 'hidden lg:block'">
           <h1 class="text-lg font-semibold text-gray-900 dark:text-white">
             {{ pageTitle }}
           </h1>
@@ -263,8 +263,9 @@ import AnnouncementBell from '@/components/common/AnnouncementBell.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { sanitizeUrl } from '@/utils/url'
 import { FeatureFlags, isFeatureFlagEnabled } from '@/utils/featureFlags'
-import { resolveRouteMetaKeys } from '@/router/title'
+import { resolveRouteMenuTitle, resolveRouteMetaKeys } from '@/router/title'
 import { resolveSiteBillingMode } from '@/utils/siteBillingMode'
+import { IMAGE_PLAYGROUND_ROUTE_NAME } from '@/utils/imagePlayground'
 
 const router = useRouter()
 const route = useRoute()
@@ -322,14 +323,11 @@ const routeMetaKeys = computed(() => resolveRouteMetaKeys(route, {
 }))
 
 const pageTitle = computed(() => {
-  // For custom pages, use the menu item's label instead of generic "自定义页面"
-  if (route.name === 'CustomPage') {
-    const id = route.params.id as string
-    const publicItems = appStore.cachedPublicSettings?.custom_menu_items ?? []
-    const menuItem = publicItems.find((item) => item.id === id)
-      ?? (authStore.isAdmin ? adminSettingsStore.customMenuItems.find((item) => item.id === id) : undefined)
-    if (menuItem?.label) return menuItem.label
-  }
+  const menuTitle = resolveRouteMenuTitle(route, [
+    ...(appStore.cachedPublicSettings?.custom_menu_items ?? []),
+    ...(authStore.isAdmin ? adminSettingsStore.customMenuItems : []),
+  ])
+  if (menuTitle) return menuTitle
   const titleKey = routeMetaKeys.value.titleKey
   if (titleKey) {
     return t(titleKey)

@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useChartTheme } from '@/composables/useChartTheme'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,13 +55,11 @@ const props = defineProps<{
   loading?: boolean
 }>()
 
-const isDarkMode = computed(() => {
-  return document.documentElement.classList.contains('dark')
-})
+const chartTheme = useChartTheme()
 
 const chartColors = computed(() => ({
-  text: isDarkMode.value ? '#e5e7eb' : '#374151',
-  grid: isDarkMode.value ? '#374151' : '#e5e7eb',
+  text: chartTheme.value.text,
+  grid: chartTheme.value.grid,
   input: '#3b82f6',
   output: '#10b981',
   cacheCreation: '#f59e0b',

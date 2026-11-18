@@ -46,6 +46,13 @@ describe('refreshAuthTokens', () => {
     vi.useRealTimers()
   })
 
+  it('rejects a refresh requested by an in-memory account replaced in another tab', async () => {
+    seedSession()
+    const { refreshAuthTokens } = await import('@/api/tokenRefresh')
+    await expect(refreshAuthTokens({ expectedUserID: 8 })).rejects.toThrow('Session changed before token refresh')
+    expect(mockedPost).not.toHaveBeenCalled()
+  })
+
   it('shares one refresh request between concurrent callers in the same document', async () => {
     seedSession()
     let resolveRequest!: (value: ReturnType<typeof refreshedResponse>) => void

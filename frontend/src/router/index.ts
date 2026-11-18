@@ -11,6 +11,12 @@ import { useAdminComplianceStore } from '@/stores/adminCompliance'
 import { useNavigationLoadingState } from '@/composables/useNavigationLoading'
 import { useRoutePrefetch } from '@/composables/useRoutePrefetch'
 import { getSetupStatus } from '@/api/setup'
+import {
+  findImagePlaygroundMenuItem,
+  IMAGE_PLAYGROUND_MENU_ID,
+  IMAGE_PLAYGROUND_PATH,
+  IMAGE_PLAYGROUND_ROUTE_NAME,
+} from '@/utils/imagePlayground'
 import { resolveCompletedSetupRedirectPath } from './setupRedirect'
 import { resolveRouteDocumentTitle } from './title'
 
@@ -407,6 +413,22 @@ const routes: RouteRecordRaw[] = [
       title: 'Payment',
       requiresPayment: false
     }
+  },
+  {
+    path: IMAGE_PLAYGROUND_PATH,
+    name: IMAGE_PLAYGROUND_ROUTE_NAME,
+    component: () => import('@/views/user/ImagePlaygroundView.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresAdmin: false,
+      title: 'AI Image',
+      titleKey: 'imagePlayground.title',
+    },
+  },
+  {
+    path: `/custom/${IMAGE_PLAYGROUND_MENU_ID}`,
+    sensitive: true,
+    redirect: () => ({ path: IMAGE_PLAYGROUND_PATH, query: {}, hash: '' }),
   },
   {
     path: '/custom/:id',
@@ -806,6 +828,12 @@ router.beforeEach(async (to, _from, next) => {
   // 开始导航加载状态
   navigationLoading.startNavigation()
 
+  // Vue Router also decodes percent-encoded parameters on the generic custom route.
+  if (to.name === 'CustomPage' && to.params.id === IMAGE_PLAYGROUND_MENU_ID) {
+    next({ path: IMAGE_PLAYGROUND_PATH, replace: true })
+    return
+  }
+
   const authStore = useAuthStore()
 
   // Restore auth state from localStorage on first navigation (page refresh)
@@ -826,6 +854,11 @@ router.beforeEach(async (to, _from, next) => {
   // Check if route requires authentication
   const requiresAuth = to.meta.requiresAuth !== false // Default to true
   const requiresAdmin = to.meta.requiresAdmin === true
+
+  if (to.name === IMAGE_PLAYGROUND_ROUTE_NAME && (to.hash || Object.keys(to.query).length)) {
+    next({ path: IMAGE_PLAYGROUND_PATH, replace: true })
+    return
+  }
 
   if (to.path === '/setup') {
     try {
@@ -986,16 +1019,32 @@ router.beforeEach(async (to, _from, next) => {
   }
 
   // Backend mode: admin gets full access, non-admin blocked
-  if (appStore.backendModeEnabled) {
-    if (authStore.isAuthenticated && authStore.isAdmin) {
-      next()
-      return
-    }
+  if (appStore.backendModeEnabled && !authStore.isAdmin) {
     const isAllowed = isBackendModePublicRouteAllowed(to.path, authStore.hasPendingAuthSession)
     if (!isAllowed) {
       next('/login')
       return
     }
+  }
+
+  if (to.name === IMAGE_PLAYGROUND_ROUTE_NAME) {
+    if (!appStore.publicSettingsLoaded) await appStore.fetchPublicSettings()
+
+    const getPublicItem = () => findImagePlaygroundMenuItem(appStore.cachedPublicSettings?.custom_menu_items ?? [], 'user')
+    if (!getPublicItem() && authStore.isAdmin) await adminSettingsStore.fetch()
+
+    if (!authStore.isAuthenticated || (appStore.backendModeEnabled && !authStore.isAdmin)) {
+      next('/login')
+      return
+    }
+    const menuItem = getPublicItem() ?? (authStore.isAdmin
+      ? findImagePlaygroundMenuItem(adminSettingsStore.customMenuItems, 'admin')
+      : undefined)
+    if (!menuItem) {
+      next(authStore.isAdmin ? '/admin/dashboard' : '/dashboard')
+      return
+    }
+    document.title = resolveRouteDocumentTitle(to, appStore.siteName, [menuItem])
   }
 
   // All checks passed, allow navigation

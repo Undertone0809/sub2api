@@ -286,7 +286,7 @@
                     />
                   </svg>
                   <p class="text-xs text-blue-600 dark:text-blue-400">
-                    {{ t('version.sourceModeHint') }}
+                    {{ t(isLLMRouteBuild ? 'version.llmRouteReleaseHint' : 'version.sourceModeHint') }}
                   </p>
                 </div>
               </div>
@@ -414,7 +414,7 @@
                           />
                         </svg>
                         <p class="min-w-0 flex-1 text-xs leading-4 text-blue-600 dark:text-blue-400">
-                          {{ t('version.rollbackSourceHint') }}
+                          {{ t(isLLMRouteBuild ? 'version.llmRouteReleaseHint' : 'version.rollbackSourceHint') }}
                         </p>
                       </div>
 
@@ -676,6 +676,7 @@ const latestVersion = computed(() => appStore.latestVersion)
 const hasUpdate = computed(() => appStore.hasUpdate)
 const releaseInfo = computed(() => appStore.releaseInfo)
 const buildType = computed(() => appStore.buildType)
+const isLLMRouteBuild = computed(() => buildType.value === 'llm-route')
 
 // Update process states (local to this component)
 const updating = ref(false)

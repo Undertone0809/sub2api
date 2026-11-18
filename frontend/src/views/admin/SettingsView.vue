@@ -6337,10 +6337,10 @@
                   {{ t('admin.settings.user_error_view.description') }}
                 </p>
               </div>
-              <label class="toggle">
-                <input v-model="form.allow_user_view_error_requests" type="checkbox" />
-                <span class="toggle-slider"></span>
-              </label>
+              <Toggle
+                v-model="form.allow_user_view_error_requests"
+                :aria-label="t('admin.settings.user_error_view.label')"
+              />
             </div>
           </div>
         </div>
@@ -8183,11 +8183,14 @@
                     }}</label>
                     <div class="flex items-center gap-2">
                       <button
+                        role="switch"
+                        :aria-checked="!!form.payment_cancel_rate_limit_enabled"
+                        :aria-label="t('admin.settings.payment.cancelRateLimit')"
                         type="button"
                         :class="[
                           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                           form.payment_cancel_rate_limit_enabled
-                            ? 'bg-primary-500'
+                            ? 'bg-emerald-600 dark:bg-emerald-500'
                             : 'bg-gray-300 dark:bg-dark-600',
                         ]"
                         @click="
@@ -8273,11 +8276,14 @@
                     }}</label>
                     <div class="flex items-center gap-2">
                       <button
+                        role="switch"
+                        :aria-checked="!!form.payment_alipay_force_qrcode"
+                        :aria-label="t('admin.settings.payment.alipayForceQRCode')"
                         type="button"
                         :class="[
                           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                           form.payment_alipay_force_qrcode
-                            ? 'bg-primary-500'
+                            ? 'bg-emerald-600 dark:bg-emerald-500'
                             : 'bg-gray-300 dark:bg-dark-600',
                         ]"
                         @click="
@@ -8305,11 +8311,14 @@
                     }}</label>
                     <div class="flex items-center gap-2">
                       <button
+                        role="switch"
+                        :aria-checked="!!form.payment_alipay_mobile_precreate_deep_link"
+                        :aria-label="t('admin.settings.payment.alipayMobilePrecreateDeepLink')"
                         type="button"
                         :class="[
                           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
                           form.payment_alipay_mobile_precreate_deep_link
-                            ? 'bg-primary-500'
+                            ? 'bg-emerald-600 dark:bg-emerald-500'
                             : 'bg-gray-300 dark:bg-dark-600',
                         ]"
                         @click="
@@ -8818,12 +8827,15 @@
                     >
                       <input
                         type="checkbox"
+                        role="switch"
+                        :aria-checked="!entry.disabled"
+                        :aria-label="t('admin.settings.quotaNotify.enabled') + ' ' + entry.email"
                         :checked="!entry.disabled"
                         @change="entry.disabled = !entry.disabled"
                         class="sr-only peer"
                       />
                       <div
-                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:after:border-gray-500 peer-checked:bg-primary-600"
+                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:after:border-gray-500 peer-checked:bg-emerald-600 dark:peer-checked:bg-emerald-500"
                       ></div>
                     </label>
                     <input
@@ -13281,11 +13293,10 @@ watch(
 
 /* ============ 系统设置 Tab 导航 ============ */
 .settings-tabs-shell {
-  @apply sticky z-20 -mx-1 rounded-2xl border border-white/80 bg-white/90 p-1.5 backdrop-blur-xl;
+  @apply sticky z-20 -mx-1 rounded-2xl border p-1.5 shadow-sm backdrop-blur-xl;
   top: 4.75rem;
-  box-shadow:
-    0 12px 28px rgb(15 23 42 / 0.07),
-    0 1px 0 rgb(255 255 255 / 0.9) inset;
+  border-color: var(--llmr-line);
+  background-color: color-mix(in srgb, var(--llmr-panel) 90%, transparent);
 }
 
 .settings-tabs-scroll {
@@ -13323,7 +13334,7 @@ watch(
 .settings-tab::before {
   @apply absolute inset-0 -z-10 rounded-xl opacity-0 transition-opacity duration-200;
   content: "";
-  background: linear-gradient(135deg, rgb(248 250 252 / 0.95), rgb(241 245 249 / 0.8));
+  background-color: var(--llmr-hover);
 }
 
 .settings-tab:hover::before,
@@ -13336,10 +13347,10 @@ watch(
 }
 
 .settings-tab-active {
-  @apply border-primary-200/80 bg-white text-primary-700 shadow-sm dark:border-primary-400/30 dark:bg-dark-700/95 dark:text-primary-200;
-  box-shadow:
-    0 8px 18px rgb(15 23 42 / 0.08),
-    0 1px 0 rgb(255 255 255 / 0.92) inset;
+  @apply shadow-sm;
+  border-color: var(--llmr-line);
+  background-color: var(--llmr-elevated);
+  color: var(--llmr-text);
 }
 
 .settings-tab-active::before {
@@ -13354,7 +13365,7 @@ watch(
   height: 2px;
   border-radius: 9999px;
   content: "";
-  background: linear-gradient(90deg, #14b8a6, #0ea5e9);
+  background-color: var(--llmr-focus);
 }
 
 .settings-tab-icon {
@@ -13376,40 +13387,8 @@ watch(
 
 /* ============ 系统设置 保存浮标 ============ */
 .settings-save-dock {
-  @apply sticky bottom-3 z-20 ml-auto flex w-fit items-center rounded-full border border-white/80 bg-white/90 p-1.5 backdrop-blur-xl;
-  box-shadow:
-    0 10px 26px rgb(15 23 42 / 0.12),
-    0 1px 0 rgb(255 255 255 / 0.9) inset;
-}
-</style>
-
-<style>
-/* Dark-mode overrides for the settings tabs shell. Kept in an UNSCOPED block
-   because Vue's scoped-CSS compiler was dropping the `:global(.dark) ...`
-   rules in the production build, leaving inactive tabs unreadable on dark. */
-.dark .settings-tabs-shell {
-  border-color: rgb(51 65 85 / 0.65);
-  background: rgb(15 23 42 / 0.86);
-  box-shadow:
-    0 16px 36px rgb(0 0 0 / 0.28),
-    0 1px 0 rgb(255 255 255 / 0.06) inset;
-}
-
-.dark .settings-tab::before {
-  background: linear-gradient(135deg, rgb(30 41 59 / 0.9), rgb(51 65 85 / 0.62));
-}
-
-.dark .settings-tab-active {
-  box-shadow:
-    0 12px 26px rgb(0 0 0 / 0.22),
-    0 1px 0 rgb(255 255 255 / 0.08) inset;
-}
-
-.dark .settings-save-dock {
-  border-color: rgb(51 65 85 / 0.65);
-  background: rgb(15 23 42 / 0.86);
-  box-shadow:
-    0 14px 32px rgb(0 0 0 / 0.34),
-    0 1px 0 rgb(255 255 255 / 0.06) inset;
+  @apply sticky bottom-3 z-20 ml-auto flex w-fit items-center rounded-full border p-1.5 shadow-md backdrop-blur-xl;
+  border-color: var(--llmr-line);
+  background-color: color-mix(in srgb, var(--llmr-elevated) 90%, transparent);
 }
 </style>

@@ -2,6 +2,7 @@ import { i18n } from '@/i18n'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import type { CustomMenuItem } from '@/types'
 import type { SiteBillingMode } from '@/utils/siteBillingMode'
+import { IMAGE_PLAYGROUND_MENU_ID, IMAGE_PLAYGROUND_ROUTE_NAME } from '@/utils/imagePlayground'
 
 /**
  * 统一生成页面标题，避免多处写入 document.title 产生覆盖冲突。
@@ -68,12 +69,20 @@ export function resolveRouteDocumentTitle(
   customMenuItems: CustomMenuItem[] = [],
   options: RouteTitleOptions = {},
 ): string {
-  const id = typeof route.params.id === 'string' ? route.params.id : ''
-  const menuItem = route.name === 'CustomPage' && id
-    ? customMenuItems.find((item) => item.id === id)
-    : undefined
-  const menuTitle = menuItem?.label.trim()
+  const menuTitle = resolveRouteMenuTitle(route, customMenuItems)
   const { titleKey } = resolveRouteMetaKeys(route, options)
 
   return resolveDocumentTitle(menuTitle || route.meta.title, siteName, menuTitle ? undefined : titleKey)
+}
+
+export function resolveRouteMenuTitle(
+  route: Pick<RouteLocationNormalizedLoaded, 'name' | 'params'>,
+  customMenuItems: CustomMenuItem[],
+): string | undefined {
+  const id = route.name === IMAGE_PLAYGROUND_ROUTE_NAME
+    ? IMAGE_PLAYGROUND_MENU_ID
+    : route.name === 'CustomPage' && typeof route.params.id === 'string'
+      ? route.params.id
+      : undefined
+  return customMenuItems.find((item) => item.id === id)?.label.trim()
 }
